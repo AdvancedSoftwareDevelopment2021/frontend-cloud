@@ -25,6 +25,11 @@ iView Admin is a front-end management background integration solution. It based 
 
 ![image](https://file.iviewui.com/admin-dist/admin-preview.png)
 
+## Prototype
+
+- link: https://www.xiaopiu.com/project?proid=61713e6168c1f7888b2d513f
+- doc: [path](./docs/界面原型实现.docx)
+
 ## Features
 
 - Login / Logout
