@@ -90,7 +90,28 @@ npm run dev
 npm run build
 ```
 
+## Q&A
+
+- ```shell
+  Invalid options in vue.config.js: "baseUrl" is not allowed
+  ```
+
+  Since baseUrl was abolished after vue-cli.3.3 version, publicPath was used instead, just replace baseUrl with publicPath.
+
+- ```shell
+  TypeError: Cannot read property 'version' of undefined
+  ```
+
+  Delete node_modules and reinstall using ```npm install```
+
+- ```shell
+  Syntax Error: TypeError: eslint.CLIEngine is not a constructor
+  ```
+
+  Reinstall the ESLint with a low version or change lintOnSave to false in the vue.config.js file.
+
 ## License
+
 [MIT](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2016-present, TalkingData
