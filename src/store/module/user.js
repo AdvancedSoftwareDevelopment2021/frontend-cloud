@@ -1,15 +1,15 @@
 import {
+  getContentByMsgId,
+  getMessage,
+  getUnreadCount,
+  getUserInfo,
+  hasRead,
   login,
   logout,
-  getUserInfo,
-  getMessage,
-  getContentByMsgId,
-  hasRead,
   removeReaded,
-  restoreTrash,
-  getUnreadCount
+  restoreTrash
 } from '@/api/user'
-import { setToken, getToken } from '@/libs/util'
+import { getToken, setToken } from '@/libs/util'
 
 export default {
   state: {

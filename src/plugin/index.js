@@ -1,4 +1,5 @@
 import config from '@/config'
+
 const { plugin } = config
 
 export default (Vue) => {

@@ -1,8 +1,8 @@
 import Mock from 'mockjs'
-import { login, logout, getUserInfo } from './login'
-import { getTableData, getDragList, uploadImage, getOrgData, getTreeSelectData } from './data'
-import { getMessageInit, getContentByMsgId, hasRead, removeReaded, restoreTrash, messageCount } from './user'
-
+import { getUserInfo, login, logout } from './login'
+import { getDragList, getOrgData, getTableData, getTreeSelectData, uploadImage } from './data'
+import { getContentByMsgId, getMessageInit, hasRead, messageCount, removeReaded, restoreTrash } from './user'
+import { deleteEdge, getEdgeList } from './edge-management'
 // 配置Ajax请求延时，可用来测试网络延迟大时项目中一些效果
 Mock.setup({
   timeout: 1000
@@ -25,4 +25,9 @@ Mock.mock(/\/message\/count/, messageCount)
 Mock.mock(/\/get_org_data/, getOrgData)
 Mock.mock(/\/get_tree_select_data/, getTreeSelectData)
 
+Mock.mock(/\/edge/, getEdgeList)
+Mock.mock(/\/edge\/[A-Za-z0-9-]*/, deleteEdge)
+
+Mock.mock(/\/data/, getDataList)
+Mock.mock(/\/data\/[A-Za-z0-9-]*/, deleteData)
 export default Mock

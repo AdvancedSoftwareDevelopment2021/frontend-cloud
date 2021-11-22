@@ -1,29 +1,38 @@
 <template>
   <div ref="outerWrapper" :class="wrapperClasses">
     <div v-if="isHorizontal" :class="`${prefix}-horizontal`">
-      <div :style="{right: `${anotherOffset}%`}" :class="[`${prefix}-pane`, 'left-pane']"><slot name="left"/></div>
+      <div :style="{right: `${anotherOffset}%`}" :class="[`${prefix}-pane`, 'left-pane']">
+        <slot name="left"/>
+      </div>
       <div :class="`${prefix}-trigger-con`" :style="{left: `${offset}%`}" @mousedown="handleMousedown">
         <slot name="trigger">
           <trigger mode="vertical"/>
         </slot>
       </div>
-      <div :style="{left: `${offset}%`}" :class="[`${prefix}-pane`, 'right-pane']"><slot name="right"/></div>
+      <div :style="{left: `${offset}%`}" :class="[`${prefix}-pane`, 'right-pane']">
+        <slot name="right"/>
+      </div>
     </div>
     <div v-else :class="`${prefix}-vertical`">
-      <div :style="{bottom: `${anotherOffset}%`}" :class="[`${prefix}-pane`, 'top-pane']"><slot name="top"/></div>
-     <div :class="`${prefix}-trigger-con`" :style="{top: `${offset}%`}" @mousedown="handleMousedown">
+      <div :style="{bottom: `${anotherOffset}%`}" :class="[`${prefix}-pane`, 'top-pane']">
+        <slot name="top"/>
+      </div>
+      <div :class="`${prefix}-trigger-con`" :style="{top: `${offset}%`}" @mousedown="handleMousedown">
         <slot name="trigger">
           <trigger mode="horizontal"/>
         </slot>
       </div>
-      <div :style="{top: `${offset}%`}" :class="[`${prefix}-pane`, 'bottom-pane']"><slot name="bottom"/></div>
+      <div :style="{top: `${offset}%`}" :class="[`${prefix}-pane`, 'bottom-pane']">
+        <slot name="bottom"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { oneOf, on, off } from '@/libs/tools'
+import { off, on, oneOf } from '@/libs/tools'
 import Trigger from './trigger.vue'
+
 export default {
   name: 'SplitPane',
   components: {
@@ -50,11 +59,11 @@ export default {
     }
   },
   /**
-   * Events
-   * @on-move-start
-   * @on-moving 返回值：事件对象，但是在事件对象中加入了两个参数：atMin(当前是否在最小值处), atMax(当前是否在最大值处)
-   * @on-move-end
-   */
+     * Events
+     * @on-move-start
+     * @on-moving 返回值：事件对象，但是在事件对象中加入了两个参数：atMin(当前是否在最小值处), atMax(当前是否在最大值处)
+     * @on-move-end
+     */
   data () {
     return {
       prefix: 'ivu-split',
@@ -154,5 +163,5 @@ export default {
 </script>
 
 <style lang="less">
-@import './index.less';
+  @import './index.less';
 </style>

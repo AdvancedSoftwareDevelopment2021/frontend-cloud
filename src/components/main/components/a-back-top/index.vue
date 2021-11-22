@@ -1,15 +1,16 @@
 <template>
-    <div :class="classes" :style="styles" @click="back">
-        <slot>
-            <div :class="innerClasses">
-                <i class="ivu-icon ivu-icon-ios-arrow-up"></i>
-            </div>
-        </slot>
-    </div>
+  <div :class="classes" :style="styles" @click="back">
+    <slot>
+      <div :class="innerClasses">
+        <i class="ivu-icon ivu-icon-ios-arrow-up"></i>
+      </div>
+    </slot>
+  </div>
 </template>
 <script>
 import { scrollTop } from '@/libs/util'
-import { on, off } from '@/libs/tools'
+import { off, on } from '@/libs/tools'
+
 const prefixCls = 'ivu-back-top'
 
 export default {

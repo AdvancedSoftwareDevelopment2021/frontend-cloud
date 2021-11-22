@@ -1,5 +1,4 @@
 import Main from '@/components/main'
-import parentView from '@/components/parent-view'
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -47,6 +46,55 @@ export default [
           icon: 'md-home'
         },
         component: () => import('@/view/single-page/home')
+      }
+    ]
+  },
+  {
+    path: '/edge_management',
+    name: '边缘端',
+    component: Main,
+    meta: {
+      title: '边缘端',
+      icon: 'logo-buffer'
+    },
+    children: [
+      {
+        path: '',
+        name: '边缘端管理',
+        meta: {
+          title: '边缘端管理',
+          icon: 'logo-buffer'
+        },
+        component: () => import('@/view/edge-management/edge-management')
+      },
+      {
+        path: 'add_edge',
+        name: '新增边缘端',
+        meta: {
+          title: '新增边缘端',
+          hideInMenu: true
+        },
+        component: () => import('@/view/edge-management/add-edge')
+      }
+    ]
+  },
+  {
+    path: '/data_management',
+    name: '数据包',
+    component: Main,
+    meta: {
+      title: '数据包',
+      icon: 'ios-albums'
+    },
+    children: [
+      {
+        path: '',
+        name: '数据包管理',
+        meta: {
+          title: '边缘端管理',
+          icon: 'ios-albums'
+        },
+        component: () => import('@/view/data-management/data-management')
       }
     ]
   },

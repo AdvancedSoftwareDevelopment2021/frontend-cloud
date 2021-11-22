@@ -5,7 +5,8 @@
 <script>
 import echarts from 'echarts'
 import tdTheme from './theme.json'
-import { on, off } from '@/libs/tools'
+import { off, on } from '@/libs/tools'
+
 echarts.registerTheme('tdTheme', tdTheme)
 export default {
   name: 'ChartBar',

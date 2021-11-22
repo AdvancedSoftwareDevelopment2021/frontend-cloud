@@ -50,6 +50,7 @@
 import Cropper from 'cropperjs'
 import './index.less'
 import 'cropperjs/dist/cropper.min.css'
+
 export default {
   name: 'Cropper',
   props: {

@@ -27,6 +27,7 @@ export default (codemirror) => {
         cm.state.placeholder = null
       }
     }
+
     function setPlaceholder (cm) {
       clearPlaceholder(cm)
       var elt = cm.state.placeholder = document.createElement('pre')
@@ -42,6 +43,7 @@ export default (codemirror) => {
     function onBlur (cm) {
       if (isEmpty(cm)) setPlaceholder(cm)
     }
+
     function onChange (cm) {
       let wrapper = cm.getWrapperElement()
       let empty = isEmpty(cm)
