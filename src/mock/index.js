@@ -3,6 +3,7 @@ import { getUserInfo, login, logout } from './login'
 import { getDragList, getOrgData, getTableData, getTreeSelectData, uploadImage } from './data'
 import { getContentByMsgId, getMessageInit, hasRead, messageCount, removeReaded, restoreTrash } from './user'
 import { deleteEdge, getEdgeList } from './edge-management'
+import { deleteData, getDataList } from './data-management'
 // 配置Ajax请求延时，可用来测试网络延迟大时项目中一些效果
 Mock.setup({
   timeout: 1000
