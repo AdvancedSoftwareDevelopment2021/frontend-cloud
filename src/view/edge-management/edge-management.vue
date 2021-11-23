@@ -62,7 +62,7 @@ export default {
           title: '操作',
           key: 'operation',
           render: (h, { row }) => {
-            return h(PopConfirmButton, {
+            const deleteButton = h(PopConfirmButton, {
               props: {
                 buttonProps: {
                   size: 'small', type: 'error'
@@ -72,6 +72,25 @@ export default {
                 ok: () => this.handleDelete(row.id)
               }
             })
+            const editButton = h('Button',
+              {
+                props: {
+                  size: 'small',
+                  type: 'primary'
+                },
+                style: {
+                  marginRight: '1%'
+                },
+                on: {
+                  click: () => {
+
+                  }
+                }
+              },
+              '编辑边缘端'
+            )
+            const buttons = [editButton, deleteButton]
+            return h('div', buttons)
           }
         }
       ]
