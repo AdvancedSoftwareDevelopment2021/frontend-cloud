@@ -1,9 +1,11 @@
 <template>
-  <Row type="flex" justify="center">
-    <Col span="8">
-      <edge-form ref="formRef" :submit="handleSubmit"/>
-    </Col>
-  </Row>
+  <Card>
+    <Row type="flex" justify="center">
+      <Col span="8">
+        <edge-form ref="formRef" :submit="handleSubmit"/>
+      </Col>
+    </Row>
+  </Card>
 </template>
 
 <script>
