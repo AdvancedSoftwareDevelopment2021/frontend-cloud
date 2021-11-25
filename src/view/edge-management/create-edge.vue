@@ -13,12 +13,14 @@ import EdgeForm from '_c/edge/form'
 import { addEdge } from '@/api/edge-management'
 
 export default {
-  name: 'add-edge',
+  name: 'create-edge',
   components: {
     EdgeForm
   },
   data () {
-    return {}
+    return {
+
+    }
   },
   methods: {
     handleSubmit (data) {

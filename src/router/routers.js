@@ -68,13 +68,22 @@ export default [
         component: () => import('@/view/edge-management/edge-management')
       },
       {
-        path: 'add_edge',
+        path: 'create-edge',
         name: '新增边缘端',
         meta: {
           title: '新增边缘端',
           hideInMenu: true
         },
-        component: () => import('@/view/edge-management/add-edge')
+        component: () => import('@/view/edge-management/create-edge')
+      },
+      {
+        path: 'modify-edge',
+        name: '修改边缘端',
+        meta: {
+          title: '修改边缘端',
+          hideInMenu: true
+        },
+        component: () => import('@/view/edge-management/modify-edge')
       }
     ]
   },

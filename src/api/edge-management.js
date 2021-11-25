@@ -17,3 +17,9 @@ export const addEdge = (data) => axios.request({
   data: data,
   method: 'post'
 })
+
+export const modifyEdge = (data) => axios.request({
+  url: `${url}`,
+  data: data,
+  method: 'put'
+})

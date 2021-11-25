@@ -1,6 +1,6 @@
 <template>
   <Form ref="formRef" :model="form" :rules="rules">
-    <h2>基本信息</h2>
+    <h2>边缘端信息</h2>
     <FormItem label="边缘端名称" prop="name"><Input v-model="form.name"></Input></FormItem>
     <FormItem label="描述" prop="description"><Input v-model="form.description"></Input></FormItem>
     <FormItem label="ip" prop="ip"><Input v-model="form.ip"></Input></FormItem>
@@ -15,17 +15,6 @@
   button {
     margin-right: 8px;
   }
-
-  .auto-margin {
-    margin: auto;
-  }
-
-  .new-column {
-    float: right;
-    margin-top: 5px;
-    margin-right: 0;
-  }
-
   .footer {
     margin-top: 50px;
   }

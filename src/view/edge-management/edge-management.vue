@@ -6,7 +6,7 @@
         type="primary"
         icon="md-add"
         ghost
-        to="/edge_management/add_edge"
+        to="/edge_management/edge"
       >
         新增边缘端
       </Button>
@@ -25,8 +25,8 @@
 
 <script>
 import PagedTable from '_c/paged-table/paged-table.vue'
-import { getEdgeList, removeEdge } from '@/api/edge-management'
 import PopConfirmButton from '_c/pop-confirm-button'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'edge-management',
@@ -36,7 +36,6 @@ export default {
   data: function () {
     return {
       loading: true,
-      edgeList: [],
       columns: [
         {
           title: '名称',
@@ -83,11 +82,11 @@ export default {
                 },
                 on: {
                   click: () => {
-
+                    this.handleEdit(row)
                   }
                 }
               },
-              '编辑边缘端'
+              '编辑'
             )
             const buttons = [editButton, deleteButton]
             return h('div', buttons)
@@ -98,18 +97,32 @@ export default {
   },
   methods: {
     handleDelete (id) {
-      removeEdge(id).then(
+      this.removeEdge(id).then(
         () => this.$Message.success('删除成功')
       ).catch(
         (err) => this.$Message.error(err.message)
       )
-    }
+    },
+    handleEdit (data) {
+      this.setEdge(data)
+      this.router.push({ path: '/edge_management/edge' })
+    },
+    ...mapActions([
+      'getEdgeList',
+      'removeEdge'
+    ]),
+    ...mapMutations['setEdge']
   },
   mounted () {
-    getEdgeList().then((res) => {
-      this.edgeList = res.data
+    this.loading = true
+    this.getEdgeList().then(() => {
       this.loading = false
     }).catch((err) => this.$Message.error(err.message))
+  },
+  computed: {
+    ...mapState({
+      edgeList: (state) => state.edgeManagement.edgeList
+    })
   }
 }
 </script>

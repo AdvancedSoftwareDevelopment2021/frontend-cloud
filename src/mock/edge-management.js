@@ -14,7 +14,9 @@ Random.extend({
   })
 })
 
-export const getEdgeList = () => range(25).map(Random.edgeList)
+export const getEdgeList = () => {
+  return range(25).map(Random.edgeList)
+}
 
 export const deleteEdge = (id) => null
 
