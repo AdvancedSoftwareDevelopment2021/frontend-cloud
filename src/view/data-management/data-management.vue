@@ -14,7 +14,7 @@
 
 <script>
 import PagedTable from '_c/paged-table/paged-table.vue'
-import { getDataList, removeData } from '@/api/data-management'
+import { getDataList, removeData, downloadData } from '@/api/data-management'
 import PopConfirmButton from '_c/pop-confirm-button'
 
 export default {
@@ -79,22 +79,29 @@ export default {
   },
   methods: {
     handleDelete (id) {
+      this.loading = true
       removeData(id).then(
-        () => this.$Message.success('删除成功')
+        () => {
+          this.refresh()
+          this.$Message.success('删除成功')
+        }
       ).catch(
         (err) => this.$Message.error(err.message)
       )
+    },
+    handleDownload (id) {
+      downloadData(id)
+    },
+    refresh () {
+      this.loading = true
+      getDataList().then((res) => {
+        this.dataList = res.data
+        this.loading = false
+      }).catch((err) => this.$Message.error(err.message))
     }
   },
-  handleDownload (id) {
-    // TODO
-    this.$Message.success('下载完成')
-  },
   mounted () {
-    getDataList().then((res) => {
-      this.dataList = res.data
-      this.loading = false
-    }).catch((err) => this.$Message.error(err.message))
+    this.refresh()
   }
 }
 </script>

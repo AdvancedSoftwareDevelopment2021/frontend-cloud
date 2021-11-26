@@ -6,7 +6,7 @@
         type="primary"
         icon="md-add"
         ghost
-        to="/edge_management/edge"
+        to="/edge_management/create-edge"
       >
         新增边缘端
       </Button>
@@ -96,6 +96,11 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'getEdgeListAction',
+      'removeEdgeAction'
+    ]),
+    ...mapMutations(['setEdge']),
     handleDelete (id) {
       this.removeEdge(id).then(
         () => this.$Message.success('删除成功')
@@ -105,17 +110,12 @@ export default {
     },
     handleEdit (data) {
       this.setEdge(data)
-      this.router.push({ path: '/edge_management/edge' })
-    },
-    ...mapActions([
-      'getEdgeList',
-      'removeEdge'
-    ]),
-    ...mapMutations['setEdge']
+      this.$router.push({ path: 'modify-edge' })
+    }
   },
   mounted () {
     this.loading = true
-    this.getEdgeList().then(() => {
+    this.getEdgeListAction().then(() => {
       this.loading = false
     }).catch((err) => this.$Message.error(err.message))
   },

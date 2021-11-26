@@ -21,3 +21,5 @@ export const getEdgeList = () => {
 export const deleteEdge = (id) => null
 
 export const addEdge = (data) => null
+
+export const modifyEdge = (data) => null

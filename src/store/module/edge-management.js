@@ -6,7 +6,7 @@ import { getEdgeList, removeEdge, addEdge, modifyEdge } from '@/api/edge-managem
 export default {
   state: {
     edgeList: [],
-    edgeData: []
+    edgeData: {}
   },
   mutations: {
     /**
@@ -25,6 +25,7 @@ export default {
      * 修改边缘端
      */
     modifyEdge (state, edge) {
+      console.log(edge)
       state.edgeList.forEach(c => {
         if (c.id === edge.id) {
           return edge
@@ -42,7 +43,7 @@ export default {
     /**
      * 从后端拉取边缘端列表
      */
-    getEdgeList ({ commit }) {
+    getEdgeListAction ({ commit }) {
       return new Promise((resolve, reject) => {
         getEdgeList().then(res => {
           commit('setEdgeList', res.data)
@@ -55,22 +56,42 @@ export default {
     /**
      * 添加边缘端
      */
-    async addEdge ({ commit }, data) {
-      commit('addEdge', await addEdge(data))
+    addEdgeAction ({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        addEdge(data).then(res => {
+          commit('addEdge', res.data)
+          resolve()
+        }).catch(err => {
+          reject(err)
+        })
+      })
     },
     /**
      * 删除边缘端
      */
-    async removeEdge ({ commit }, id) {
-      await removeEdge(id)
-      commit('deleteEdge', id)
+    removeEdgeAction ({ commit }, id) {
+      return new Promise((resolve, reject) => {
+        removeEdge(id).then(() => {
+          commit('deleteEdge', id)
+          resolve()
+        }).catch(err => {
+          reject(err)
+        })
+      })
     },
     /**
      * 修改边缘端
      */
-    async modifyEdge ({ commit }, data) {
-      await modifyEdge(data)
-      commit('modifyEdge', data)
+    modifyEdgeAction ({ commit }, data) {
+      console.log('action', data)
+      return new Promise((resolve, reject) => {
+        modifyEdge(data).then(() => {
+          commit('modifyEdge', data)
+          resolve()
+        }).catch(err => {
+          reject(err)
+        })
+      })
     }
   }
 }

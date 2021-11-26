@@ -21,14 +21,23 @@
 </style>
 <script>
 import { portValidator, requiredBlur as required } from '@/libs/form.validation'
+import { getOr } from 'lodash/fp'
 
 export default {
-  props: { submit: { type: Function } },
+  props: {
+    submit: { type: Function },
+    edgeData: { type: Object, default: null }
+  },
   data () {
     /**
        * 默认表单信息
        */
-    const form = { name: '', description: '' }
+    const form = {
+      name: getOr('')('name')(this.edgeData),
+      description: getOr('')('description')(this.edgeData),
+      ip: getOr('')('ip')(this.edgeData),
+      port: getOr('')('port')(this.edgeData)
+    }
     return {
       /**
          * 表单数据对象
