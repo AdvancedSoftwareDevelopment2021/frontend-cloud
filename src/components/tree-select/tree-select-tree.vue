@@ -93,7 +93,9 @@ export default {
     },
     setFlagDic (data, callback) {
       data.forEach(item => {
-        if (item.children && item.children.length) { this.setFlagDic(item.children, callback) }
+        if (item.children && item.children.length) {
+          this.setFlagDic(item.children, callback)
+        }
         callback(item)
       })
     },

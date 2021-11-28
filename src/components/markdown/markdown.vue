@@ -7,6 +7,7 @@
 <script>
 import Simplemde from 'simplemde'
 import 'simplemde/dist/simplemde.min.css'
+
 export default {
   name: 'MarkdownEditor',
   props: {
@@ -51,9 +52,9 @@ export default {
       element: this.$refs.editor
     }))
     /**
-     * 事件列表为Codemirror编辑器的事件，更多事件类型，请参考：
-     * https://codemirror.net/doc/manual.html#events
-     */
+       * 事件列表为Codemirror编辑器的事件，更多事件类型，请参考：
+       * https://codemirror.net/doc/manual.html#events
+       */
     this.addEvents()
     let content = localStorage.markdownContent
     if (content) this.editor.value(content)
@@ -62,15 +63,17 @@ export default {
 </script>
 
 <style lang="less">
-.markdown-wrapper{
-  .editor-toolbar.fullscreen{
-    z-index: 9999;
+  .markdown-wrapper {
+    .editor-toolbar.fullscreen {
+      z-index: 9999;
+    }
+
+    .CodeMirror-fullscreen {
+      z-index: 9999;
+    }
+
+    .CodeMirror-fullscreen ~ .editor-preview-side {
+      z-index: 9999;
+    }
   }
-  .CodeMirror-fullscreen{
-    z-index: 9999;
-  }
-  .CodeMirror-fullscreen ~ .editor-preview-side{
-    z-index: 9999;
-  }
-}
 </style>

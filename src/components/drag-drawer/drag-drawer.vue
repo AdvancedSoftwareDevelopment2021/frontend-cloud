@@ -47,8 +47,9 @@
 import RenderDom from '@/libs/render-dom'
 import DragDrawerTrigger from './drag-drawer-trigger.vue'
 import Mixin from './mixin'
-import { on, off } from '@/libs/tools'
+import { off, on } from '@/libs/tools'
 import './index.less'
+
 export default {
   name: 'BDrawer',
   components: {

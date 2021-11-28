@@ -3,8 +3,9 @@ import Router from 'vue-router'
 import routes from './routers'
 import store from '@/store'
 import iView from 'iview'
-import { setToken, getToken, canTurnTo, setTitle } from '@/libs/util'
+import { canTurnTo, getToken, setTitle, setToken } from '@/libs/util'
 import config from '@/config'
+
 const { homeName } = config
 
 Vue.use(Router)

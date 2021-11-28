@@ -19,6 +19,7 @@
 <script>
 import Emitter from 'iview/src/mixins/emitter'
 import TreeSelectTreeItem from './tree-select-tree.vue'
+
 export default {
   name: 'TreeSelect',
   mixins: [Emitter],
@@ -64,9 +65,9 @@ export default {
 </script>
 
 <style lang="less">
-.tree-select {
-  .ivu-select-dropdown {
-    padding: 0 6px;
+  .tree-select {
+    .ivu-select-dropdown {
+      padding: 0 6px;
+    }
   }
-}
 </style>

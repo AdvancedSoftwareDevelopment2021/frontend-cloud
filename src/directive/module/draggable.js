@@ -1,4 +1,5 @@
 import { on } from '@/libs/tools'
+
 export default {
   inserted: (el, binding, vnode) => {
     let triggerDom = document.querySelector(binding.value.trigger)

@@ -8,6 +8,7 @@
 import Editor from 'wangeditor'
 import 'wangeditor/release/wangEditor.min.css'
 import { oneOf } from '@/libs/tools'
+
 export default {
   name: 'Editor',
   props: {
@@ -16,8 +17,8 @@ export default {
       default: ''
     },
     /**
-     * 绑定的值的类型, enum: ['html', 'text']
-     */
+       * 绑定的值的类型, enum: ['html', 'text']
+       */
     valueType: {
       type: String,
       default: 'html',
@@ -26,15 +27,15 @@ export default {
       }
     },
     /**
-     * @description 设置change事件触发时间间隔
-     */
+       * @description 设置change事件触发时间间隔
+       */
     changeInterval: {
       type: Number,
       default: 200
     },
     /**
-     * @description 是否开启本地存储
-     */
+       * @description 是否开启本地存储
+       */
     cache: {
       type: Boolean,
       default: true
@@ -69,7 +70,7 @@ export default {
 </script>
 
 <style lang="less">
-.editor-wrapper *{
-  z-index: 100 !important;
-}
+  .editor-wrapper * {
+    z-index: 100 !important;
+  }
 </style>

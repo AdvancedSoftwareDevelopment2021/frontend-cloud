@@ -11,6 +11,7 @@
 import siderTrigger from './sider-trigger'
 import customBreadCrumb from './custom-bread-crumb'
 import './header-bar.less'
+
 export default {
   name: 'HeaderBar',
   components: {

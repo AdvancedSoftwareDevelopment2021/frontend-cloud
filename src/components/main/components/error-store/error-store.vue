@@ -37,13 +37,15 @@ export default {
 </script>
 
 <style lang="less">
-.error-store{
-  margin-right: 12px;
-  .ivu-badge-dot{
-    top: 20px;
+  .error-store {
+    margin-right: 12px;
+
+    .ivu-badge-dot {
+      top: 20px;
+    }
+
+    .ivu-btn.ivu-btn-text {
+      padding: 5px 1px 6px;
+    }
   }
-  .ivu-btn.ivu-btn-text{
-    padding: 5px 1px 6px;
-  }
-}
 </style>

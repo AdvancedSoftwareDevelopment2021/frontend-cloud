@@ -8,6 +8,7 @@ import CodeMirror from 'codemirror'
 import 'codemirror/lib/codemirror.css'
 import { forEach } from '@/libs/tools'
 import createPlaceholder from './plugins/placeholder'
+
 export default {
   name: 'PasteEditor',
   props: {
@@ -48,8 +49,8 @@ export default {
       this.handleAreaData()
     },
     /**
-     * @description 处理粘贴操作
-     */
+       * @description 处理粘贴操作
+       */
     handleContentChanged (content) {
       let pasteData = content.trim()
       this.$emit('on-content-change', pasteData)
@@ -63,8 +64,8 @@ export default {
       this.$emit('input', this.pasteDataArr)
     },
     /**
-     * @description 检查除第一行的每一行列数是否与第一行相同
-     */
+       * @description 检查除第一行的每一行列数是否与第一行相同
+       */
     checkColNumInEveryRow () {
       let i = 0
       const len = this.rowNum
@@ -81,14 +82,14 @@ export default {
       return true
     },
     /**
-     * @description 标记不符合格式的一行
-     */
+       * @description 标记不符合格式的一行
+       */
     markIncorrectRow (index) {
       this.editor.addLineClass(index, 'text', 'incorrect-row')
     },
     /**
-     * @description 标记不符合格式的一行
-     */
+       * @description 标记不符合格式的一行
+       */
     clearLineClass () {
       forEach(this.pasteDataArr, (item, index) => {
         this.editor.removeLineClass(index, 'text', 'incorrect-row')
@@ -111,5 +112,5 @@ export default {
 }
 </script>
 <style lang="less">
-@import './paste-editor.less';
+  @import './paste-editor.less';
 </style>

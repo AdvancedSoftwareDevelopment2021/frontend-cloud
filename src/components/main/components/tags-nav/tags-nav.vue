@@ -3,7 +3,7 @@
     <div class="close-con">
       <Dropdown transfer @on-click="handleTagsOption" style="margin-top:7px;">
         <Button size="small" type="text">
-          <Icon :size="18" type="ios-close-circle-outline" />
+          <Icon :size="18" type="ios-close-circle-outline"/>
         </Button>
         <DropdownMenu slot="list">
           <DropdownItem name="close-all">关闭所有</DropdownItem>
@@ -16,12 +16,12 @@
     </ul>
     <div class="btn-con left-btn">
       <Button type="text" @click="handleScroll(240)">
-        <Icon :size="18" type="ios-arrow-back" />
+        <Icon :size="18" type="ios-arrow-back"/>
       </Button>
     </div>
     <div class="btn-con right-btn">
       <Button type="text" @click="handleScroll(-240)">
-        <Icon :size="18" type="ios-arrow-forward" />
+        <Icon :size="18" type="ios-arrow-forward"/>
       </Button>
     </div>
     <div class="scroll-outer" ref="scrollOuter" @DOMMouseScroll="handlescroll" @mousewheel="handlescroll">
@@ -39,7 +39,8 @@
             :closable="item.name !== $config.homeName"
             :color="isCurrentTag(item) ? 'primary' : 'default'"
             @contextmenu.prevent.native="contextMenu(item, $event)"
-          >{{ showTitleInside(item) }}</Tag>
+          >{{ showTitleInside(item) }}
+          </Tag>
         </transition-group>
       </div>
     </div>
@@ -47,8 +48,9 @@
 </template>
 
 <script>
-import { showTitle, routeEqual } from '@/libs/util'
+import { routeEqual, showTitle } from '@/libs/util'
 import beforeClose from '@/router/before-close'
+
 export default {
   name: 'TagsNav',
   props: {
@@ -97,6 +99,7 @@ export default {
       } else {
         if (outerWidth < bodyWidth) {
           if (this.tagBodyLeft < -(bodyWidth - outerWidth)) {
+            // eslint-disable-next-line no-self-assign
             this.tagBodyLeft = this.tagBodyLeft
           } else {
             this.tagBodyLeft = Math.max(this.tagBodyLeft + offset, outerWidth - bodyWidth)
@@ -205,5 +208,5 @@ export default {
 </script>
 
 <style lang="less">
-@import './tags-nav.less';
+  @import './tags-nav.less';
 </style>

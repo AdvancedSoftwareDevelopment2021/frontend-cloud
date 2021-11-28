@@ -8,6 +8,7 @@
 
 <script>
 import Mixin from './mixin'
+
 export default {
   name: 'DragDrawerTrigger',
   mixins: [Mixin]
