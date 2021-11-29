@@ -87,7 +87,9 @@ export default {
         }
       ).catch(
         (err) => this.$Message.error(err.message)
-      )
+      ).finally(() => {
+        this.loading = false
+      })
     },
     handleDownload (id) {
       downloadData(id)
@@ -95,7 +97,7 @@ export default {
     refresh () {
       this.loading = true
       getDataList().then((res) => {
-        this.dataList = res.data
+        this.dataList = res.data.object
         this.loading = false
       }).catch((err) => this.$Message.error(err.message))
     }

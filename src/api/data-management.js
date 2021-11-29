@@ -1,6 +1,6 @@
 import axios from '@/libs/api.request'
 
-const url = '/data'
+const url = '/dataPackage'
 
 export const getDataList = () => axios.request({
   url: `${url}`,

@@ -2,8 +2,8 @@ import Mock from 'mockjs'
 import { getUserInfo, login, logout } from './login'
 import { getDragList, getOrgData, getTableData, getTreeSelectData, uploadImage } from './data'
 import { getContentByMsgId, getMessageInit, hasRead, messageCount, removeReaded, restoreTrash } from './user'
-import { deleteEdge, getEdgeList, modifyEdge, addEdge } from './edge-management'
-import { deleteData, getDataList } from './data-management'
+// import { deleteEdge, getEdgeList, modifyEdge, addEdge } from './edge-management'
+// import { deleteData, getDataList } from './data-management'
 
 // 配置Ajax请求延时，可用来测试网络延迟大时项目中一些效果
 Mock.setup({
@@ -27,12 +27,12 @@ Mock.mock(/\/message\/count/, messageCount)
 Mock.mock(/\/get_org_data/, getOrgData)
 Mock.mock(/\/get_tree_select_data/, getTreeSelectData)
 
-Mock.mock(/\/edge/, 'get', getEdgeList)
-Mock.mock(/\/edge\/[A-Za-z0-9-]*/, deleteEdge)
-Mock.mock(/\/edge/, 'put', modifyEdge)
-Mock.mock(/\/edge/, 'post', addEdge)
-
-Mock.mock(/\/data/, getDataList)
-Mock.mock(/\/data\/[A-Za-z0-9-]*/, deleteData)
+// Mock.mock(/\/edge/, 'get', getEdgeList)
+// Mock.mock(/\/edge\/[A-Za-z0-9-]*/, deleteEdge)
+// Mock.mock(/\/edge/, 'put', modifyEdge)
+// Mock.mock(/\/edge/, 'post', addEdge)
+//
+// Mock.mock(/\/data/, getDataList)
+// Mock.mock(/\/data\/[A-Za-z0-9-]*/, deleteData)
 
 export default Mock

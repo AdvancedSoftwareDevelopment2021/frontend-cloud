@@ -1,4 +1,5 @@
-import { getEdgeList, removeEdge, addEdge, modifyEdge } from '@/api/edge-management'
+import { getEdgeList, removeEdge, addEdge, modifyEdge, connectEdge, connectStopEdge } from '@/api/edge-management'
+import { OFFLINE, ONLINE } from '../../constants/edgeStatus'
 
 /**
  * 边缘端相关状态
@@ -25,7 +26,6 @@ export default {
      * 修改边缘端
      */
     modifyEdge (state, edge) {
-      console.log(edge)
       state.edgeList.forEach(c => {
         if (c.id === edge.id) {
           return edge
@@ -37,6 +37,30 @@ export default {
      */
     setEdge (state, edge) {
       state.edgeData = edge
+    },
+    /**
+     * 连接边缘端
+     */
+    connectEdge (state, { id, flag }) {
+      if (!flag) return
+      state.edgeList.forEach(c => {
+        if (c.id === id) {
+          c.status = ONLINE
+        }
+        return c
+      })
+    },
+    /**
+     * 断开连接边缘端
+     */
+    connectStopEdge (state, { id, flag }) {
+      if (!flag) return
+      state.edgeList.forEach(c => {
+        if (c.id === id) {
+          c.status = OFFLINE
+        }
+        return c
+      })
     }
   },
   actions: {
@@ -46,7 +70,7 @@ export default {
     getEdgeListAction ({ commit }) {
       return new Promise((resolve, reject) => {
         getEdgeList().then(res => {
-          commit('setEdgeList', res.data)
+          commit('setEdgeList', res.data.object)
           resolve()
         }).catch(err => {
           reject(err)
@@ -59,7 +83,7 @@ export default {
     addEdgeAction ({ commit }, data) {
       return new Promise((resolve, reject) => {
         addEdge(data).then(res => {
-          commit('addEdge', res.data)
+          commit('addEdge', res.data.object)
           resolve()
         }).catch(err => {
           reject(err)
@@ -83,10 +107,35 @@ export default {
      * 修改边缘端
      */
     modifyEdgeAction ({ commit }, data) {
-      console.log('action', data)
       return new Promise((resolve, reject) => {
-        modifyEdge(data).then(() => {
+        modifyEdge(data.id, data).then(() => {
           commit('modifyEdge', data)
+          resolve()
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    /**
+     * 连接边缘端
+     */
+    connectEdgeAction ({ commit }, id) {
+      return new Promise((resolve, reject) => {
+        connectEdge(id).then((res) => {
+          commit('connectEdge', { id, flag: res.data.object })
+          resolve()
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    },
+    /**
+     * 断开连接边缘端
+     */
+    connectStopEdgeAction ({ commit }, id) {
+      return new Promise((resolve, reject) => {
+        connectStopEdge(id).then((res) => {
+          commit('connectStopEdge', { id, flag: res.data.object })
           resolve()
         }).catch(err => {
           reject(err)
