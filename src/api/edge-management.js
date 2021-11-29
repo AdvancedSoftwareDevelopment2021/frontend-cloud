@@ -3,7 +3,7 @@ import axios from '@/libs/api.request'
 const url = '/edge'
 
 export const getEdgeList = () => axios.request({
-  url: `${url}`,
+  url: `${url}/list`,
   method: 'get'
 })
 
@@ -18,8 +18,18 @@ export const addEdge = (data) => axios.request({
   method: 'post'
 })
 
-export const modifyEdge = (data) => axios.request({
-  url: `${url}`,
+export const modifyEdge = (id, data) => axios.request({
+  url: `${url}/${id}`,
   data: data,
   method: 'put'
+})
+
+export const connectEdge = (id) => axios.request({
+  url: `${url}/ping/${id}`,
+  method: 'get'
+})
+
+export const connectStopEdge = (id) => axios.request({
+  url: `${url}/ping/stop/${id}`,
+  method: 'get'
 })

@@ -37,3 +37,36 @@ export const portValidator = (_, value, callback) => {
     callback(new Error('端口号不合法（取值范围为 [1, 65535]）'))
   }
 }
+
+/**
+ * interval校验规则函数
+ * @param {*} _
+ * @param {*} value 值
+ * @param {*} callback 回调函数
+ */
+export const intervalValidator = (_, value, callback) => {
+  if (value > 0 && value <= 2147483647) {
+    callback()
+  } else {
+    callback(new Error('时间间隔不合法（取值范围为 [1, 2147483647]）'))
+  }
+}
+
+/**
+ * api校验规则函数
+ * @param {*} _
+ * @param {*} value 值
+ * @param {*} callback 回调函数
+ */
+export const apiValidator = (_, value, callback) => {
+  if (value === '' || value === undefined || value === null) {
+    callback()
+    return
+  }
+  value = value.toString()
+  if (value.indexOf('/') === 0 && value.indexOf(' ') < 0) {
+    callback()
+  } else {
+    callback(new Error('连接路径不合法（请以"/"开头且不包含空格 或为空）'))
+  }
+}
