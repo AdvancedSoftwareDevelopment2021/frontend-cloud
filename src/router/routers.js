@@ -89,10 +89,10 @@ export default [
   },
   {
     path: '/data_management',
-    name: '数据包',
+    name: '数据包管理',
     component: Main,
     meta: {
-      title: '数据包',
+      title: '数据包管理',
       icon: 'ios-albums'
     },
     children: [
