@@ -14,6 +14,7 @@ import PagedTable from '../../components/paged-table/paged-table.vue'
 export default {
   name: 'process-issue',
   components: {
+    PagedTable
   },
   data: function () {
     return {
