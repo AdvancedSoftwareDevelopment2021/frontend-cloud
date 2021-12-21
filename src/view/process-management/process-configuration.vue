@@ -1,11 +1,8 @@
 <template>
-  <Card>
-    <Row>
-      <paged-table
-      />
-    </Row>
+  <div>
+    <paged-table />
     <vue-bpmn />
-  </Card>
+  </div>
 </template>
 
 <script>
