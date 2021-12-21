@@ -4,17 +4,18 @@
       <paged-table
       />
     </Row>
+    <vue-bpmn />
   </Card>
 </template>
 
 <script>
-import PagedTable from '_c/paged-table/paged-table.vue'
-import PagedTable from '../../components/paged-table/paged-table.vue'
+import VueBpmn from '_c/VueBpmn'
 
 export default {
   name: 'process-configuration',
   components: {
-    PagedTable
+    PagedTable,
+    VueBpmn
   },
   data: function () {
     return {
@@ -32,6 +33,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang=scss scoped>
 
 </style>
