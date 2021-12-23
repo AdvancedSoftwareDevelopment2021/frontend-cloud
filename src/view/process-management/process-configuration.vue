@@ -1,17 +1,16 @@
 <template>
   <div>
-    <paged-table />
+    <!-- <paged-table /> -->
     <vue-bpmn />
   </div>
 </template>
 
 <script>
-import VueBpmn from '_c/VueBpmn'
+import VueBpmn from '_c/vue-bpmn'
 
 export default {
   name: 'process-configuration',
   components: {
-    PagedTable,
     VueBpmn
   },
   data: function () {
