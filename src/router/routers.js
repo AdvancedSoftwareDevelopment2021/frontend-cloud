@@ -89,10 +89,10 @@ export default [
   },
   {
     path: '/data_management',
-    name: '数据包',
+    name: '数据包管理',
     component: Main,
     meta: {
-      title: '数据包',
+      title: '数据包管理',
       icon: 'ios-albums'
     },
     children: [
@@ -100,10 +100,39 @@ export default [
         path: '',
         name: '数据包管理',
         meta: {
-          title: '边缘端管理',
+          title: '数据包管理',
           icon: 'ios-albums'
         },
         component: () => import('@/view/data-management/data-management')
+      }
+    ]
+  },
+  {
+    path: '/process_management',
+    name: '流程',
+    component: Main,
+    meta: {
+      title: '流程',
+      icon: 'ios-albums'
+    },
+    children: [
+      {
+        path: '',
+        name: '流程配置',
+        meta: {
+          title: '流程配置',
+          icon: 'ios-albums'
+        },
+        component: () => import('@/view/process-management/process-configuration')
+      },
+      {
+        path: '',
+        name: '流程下发',
+        meta: {
+          title: '流程下发',
+          icon: 'ios-albums'
+        },
+        component: () => import('@/view/process-management/process-issue')
       }
     ]
   },
