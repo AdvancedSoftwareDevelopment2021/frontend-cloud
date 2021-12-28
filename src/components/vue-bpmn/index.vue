@@ -36,7 +36,7 @@ export default {
               <bpmn2:outgoing>SequenceFlow_1qw929z</bpmn2:outgoing>
             </bpmn2:startEvent>
             <bpmn2:sequenceFlow id="SequenceFlow_1qw929z" sourceRef="StartEvent_01ydzqe" targetRef="Task_1piqdk6" />
-            <bpmn2:userTask id="Task_1piqdk6" name="请假申请">
+            <bpmn2:userTask id="Task_1piqdk6" name="供料">
               <bpmn2:incoming>SequenceFlow_1qw929z</bpmn2:incoming>
               <bpmn2:outgoing>SequenceFlow_11h4o22</bpmn2:outgoing>
             </bpmn2:userTask>
@@ -47,12 +47,12 @@ export default {
             </bpmn2:exclusiveGateway>
             <bpmn2:sequenceFlow id="SequenceFlow_11h4o22" sourceRef="Task_1piqdk6" targetRef="ExclusiveGateway_0k39v3u" />
             <bpmn2:sequenceFlow id="SequenceFlow_1iu7pfe" sourceRef="ExclusiveGateway_0k39v3u" targetRef="Task_10fqcwp" />
-            <bpmn2:userTask id="Task_10fqcwp" name="经理审批">
+            <bpmn2:userTask id="Task_10fqcwp" name="装配">
               <bpmn2:incoming>SequenceFlow_1iu7pfe</bpmn2:incoming>
               <bpmn2:outgoing>SequenceFlow_1xod8nh</bpmn2:outgoing>
             </bpmn2:userTask>
             <bpmn2:sequenceFlow id="SequenceFlow_04uqww2" sourceRef="ExclusiveGateway_0k39v3u" targetRef="Task_15n23yh" />
-            <bpmn2:userTask id="Task_15n23yh" name="总部审批">
+            <bpmn2:userTask id="Task_15n23yh" name="分发">
               <bpmn2:incoming>SequenceFlow_04uqww2</bpmn2:incoming>
               <bpmn2:outgoing>SequenceFlow_0c8wrs4</bpmn2:outgoing>
             </bpmn2:userTask>
