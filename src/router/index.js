@@ -3,9 +3,8 @@ import Router from 'vue-router'
 import routes from './routers'
 import store from '@/store'
 import iView from 'iview'
-import { canTurnTo, getToken, setTitle, setToken } from '@/libs/util'
+import { getToken, canTurnTo, setTitle } from '@/libs/util'
 import config from '@/config'
-
 const { homeName } = config
 
 Vue.use(Router)
@@ -40,18 +39,46 @@ router.beforeEach((to, from, next) => {
     if (store.state.user.hasGetInfo) {
       turnTo(to, store.state.user.access, next)
     } else {
-      store.dispatch('getUserInfo').then(user => {
-        // 拉取用户信息，通过用户权限和跳转的页面的name来判断是否有权限访问;access必须是一个数组，如：['super_admin'] ['super_admin', 'admin']
-        turnTo(to, user.access, next)
-      }).catch(() => {
-        setToken('')
-        next({
-          name: 'login'
-        })
-      })
+      // store.dispatch('getUserInfo').then(user => {
+      //   // 拉取用户信息，通过用户权限和跳转的页面的name来判断是否有权限访问;access必须是一个数组，如：['super_admin'] ['super_admin', 'admin']
+      //   turnTo(to, user.access, next)
+      // }).catch(() => {
+      //   setToken('')
+      //   next({
+      //     name: 'login'
+      //   })
+      // })
+      turnTo(to, ['super_admin', 'admin'], next)
     }
   }
 })
+
+// 修改这部分代码
+// if (store.state.user.hasGetInfo && store.state.app.hasGetRouter) {
+//   turnTo(to, store.state.user.access, next)
+// } else {
+//   // 加载用户信息
+//   store.dispatch('getUserInfo').then(user => {
+//     // 加载用户菜单
+//     store.dispatch('getRouters').then(routers => {
+//       // commonRoutes需要追加到路由解析最后的404，把原先的routers.js中的404删掉即可
+//       router.addRoutes(routers.concat([
+//         {
+//           path: '*',
+//           name: 'error_404',
+//           meta: {
+//             hideInMenu: true
+//           },
+//           component: () => import('@/view/error-page/404.vue')
+//         }
+//       ]))
+//       next({ ...to })
+//     })
+//   }).catch(() => {
+//     setToken('')
+//     next({ name: 'login' })
+//   })
+// }
 
 router.afterEach(to => {
   setTitle(to, router.app)

@@ -136,7 +136,7 @@ export default {
                   }
                 }
               },
-              '断开连接'
+              '断连'
             )
             const buttons = [connectButton, disconnectButton, editButton, deleteButton]
             return h('div', buttons)

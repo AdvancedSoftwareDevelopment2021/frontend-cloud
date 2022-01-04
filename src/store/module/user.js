@@ -5,9 +5,9 @@ import {
   getUserInfo,
   hasRead,
   login,
-  logout,
   removeReaded,
-  restoreTrash
+  restoreTrash,
+  register
 } from '@/api/user'
 import { getToken, setToken } from '@/libs/util'
 
@@ -74,16 +74,14 @@ export default {
   },
   actions: {
     // 登录
-    handleLogin ({ commit }, { userName, password }) {
-      userName = userName.trim()
+    handleLogin ({ commit }, { username, password }) {
+      username = username.trim()
       return new Promise((resolve, reject) => {
         login({
-          userName,
+          username,
           password
         }).then(res => {
-          console.log(res)
-          const data = res.data
-          commit('setToken', data.token)
+          commit('setToken', res)
           resolve()
         }).catch(err => {
           reject(err)
@@ -92,18 +90,33 @@ export default {
     },
     // 退出登录
     handleLogOut ({ state, commit }) {
+      commit('setToken', '')
+      commit('setAccess', [])
+      // return new Promise((resolve, reject) => {
+      //   commit('setToken', '')
+      //   commit('setAccess', [])
+      //   logout(state.token).then(() => {
+      //     commit('setToken', '')
+      //     commit('setAccess', [])
+      //     resolve()
+      //   }).catch(err => {
+      //     reject(err)
+      //   })
+      // })
+    },
+    handleRegister ({ commit }, { username, password, permission }) {
+      username = username.trim()
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('setToken', '')
-          commit('setAccess', [])
+        register({
+          username,
+          password,
+          permission
+        }).then(res => {
+          commit('setToken', res)
           resolve()
         }).catch(err => {
           reject(err)
         })
-        // 如果你的退出登录无需请求接口，则可以直接使用下面三行代码而无需使用logout调用接口
-        // commit('setToken', '')
-        // commit('setAccess', [])
-        // resolve()
       })
     },
     // 获取用户相关信息
