@@ -70,7 +70,7 @@ export default {
     getEdgeListAction ({ commit }) {
       return new Promise((resolve, reject) => {
         getEdgeList().then(res => {
-          commit('setEdgeList', res.data.object)
+          commit('setEdgeList', res)
           resolve()
         }).catch(err => {
           reject(err)
@@ -83,7 +83,7 @@ export default {
     addEdgeAction ({ commit }, data) {
       return new Promise((resolve, reject) => {
         addEdge(data).then(res => {
-          commit('addEdge', res.data.object)
+          commit('addEdge', res)
           resolve()
         }).catch(err => {
           reject(err)
@@ -122,7 +122,7 @@ export default {
     connectEdgeAction ({ commit }, id) {
       return new Promise((resolve, reject) => {
         connectEdge(id).then((res) => {
-          commit('connectEdge', { id, flag: res.data.object })
+          commit('connectEdge', { id, flag: res })
           resolve()
         }).catch(err => {
           reject(err)
@@ -135,7 +135,7 @@ export default {
     connectStopEdgeAction ({ commit }, id) {
       return new Promise((resolve, reject) => {
         connectStopEdge(id).then((res) => {
-          commit('connectStopEdge', { id, flag: res.data.object })
+          commit('connectStopEdge', { id, flag: res })
           resolve()
         }).catch(err => {
           reject(err)

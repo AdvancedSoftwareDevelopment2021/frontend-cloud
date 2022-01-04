@@ -97,7 +97,7 @@ export default {
     refresh () {
       this.loading = true
       getDataList().then((res) => {
-        this.dataList = res.data.object
+        this.dataList = res
         this.loading = false
       }).catch((err) => this.$Message.error(err.message))
     }
