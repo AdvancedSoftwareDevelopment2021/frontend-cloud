@@ -109,30 +109,39 @@ export default [
   },
   {
     path: '/process_management',
-    name: ' 流程管理',
+    name: ' 流程',
     component: Main,
     meta: {
-      title: ' 流程管理',
+      title: ' 流程',
       icon: 'ios-albums'
     },
     children: [
       {
         path: '',
+        name: '流程管理',
+        meta: {
+          title: '流程管理',
+          icon: 'ios-albums'
+        },
+        component: () => import('@/view/process-management/process-management')
+      },
+      {
+        path: 'process-configuration',
         name: '流程配置',
         meta: {
           title: '流程配置',
-          icon: 'ios-albums'
+          hideInMenu: true
         },
         component: () => import('@/view/process-management/process-configuration')
       },
       {
-        path: '',
-        name: '流程下发',
+        path: 'process-modification',
+        name: '流程编辑',
         meta: {
-          title: '流程下发',
-          icon: 'ios-albums'
+          title: '流程编辑',
+          hideInMenu: true
         },
-        component: () => import('@/view/process-management/process-issue')
+        component: () => import('@/view/process-management/process-modification')
       }
     ]
   },

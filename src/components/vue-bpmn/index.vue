@@ -3,7 +3,8 @@
     <div class="canvas" ref="canvas" />
     <property-panel v-if="bpmnModeler" :modeler="bpmnModeler" />
     <div class="toolbar">
-      <Button title="download" @click="saveBPMN">添加流程</Button>
+      <Input v-model="processName" placeholder="输入流程名称" style="width: 300px" />
+      <Button title="download" @click="saveBPMN">保存流程</Button>
       <!-- <a ref="saveDiagram" href="javascript:" title="download BPMN diagram">BPMN</a>
       <a ref="saveSvg" href="javascript:" title="download as SVG image">SVG</a> -->
     </div>
@@ -15,23 +16,20 @@ import BpmnModeler from 'bpmn-js/lib/Modeler' // bpmn-js 设计器
 import PropertyPanel from './PropertyPanel' // 属性面板
 import BpmData from './BpmData'
 import { mapActions } from 'vuex'
+
 export default {
   name: 'VueBpmn',
+  props: {
+    processData: { type: Object, default: null }
+  },
   data () {
     return {
       bpmnModeler: null,
       element: null,
-      bpmData: new BpmData()
-    }
-  },
-  components: {
-    PropertyPanel
-  },
-  methods: {
-    ...mapActions(['addProcessAction']),
-    createNewDiagram () {
-      const bpmnXmlStr = `
-      <?xml version="1.0" encoding="UTF-8"?>
+      bpmData: new BpmData(),
+      processName: '',
+      bpmnXmlStr: `
+        <?xml version="1.0" encoding="UTF-8"?>
         <bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
           <bpmn2:process id="process1567044459787" name="流程1567044459787">
             <bpmn2:documentation>描述</bpmn2:documentation>
@@ -133,8 +131,21 @@ export default {
           </bpmndi:BPMNDiagram>
         </bpmn2:definitions>
       `
+    }
+  },
+  components: {
+    PropertyPanel
+  },
+  methods: {
+    ...mapActions(['addProcessAction', 'modifyProcessAction']),
+    createNewDiagram () {
+      console.log(this.processData)
+      if (this.processData !== null) {
+        this.bpmnXmlStr = this.processData.bpmn
+      }
+      console.log(this.bpmnXmlStr)
       // 将字符串转换成图显示出来
-      this.bpmnModeler.importXML(bpmnXmlStr, err => {
+      this.bpmnModeler.importXML(this.bpmnXmlStr, err => {
         if (err) {
           console.error(err)
         } else {
@@ -144,35 +155,50 @@ export default {
     },
     saveBPMN () {
       try {
-        const result = this.bpmnModeler.saveXML({ format: true })
-        const { xml } = result
-        var xmlBlob = new Blob([xml], { type: 'application/bpmn20-xml;charset=UTF-8,' })
-        var downloadLink = document.createElement('a')
-        downloadLink.download = 'ops-coffee-bpmn.bpmn'
-        downloadLink.innerHTML = 'Get BPMN SVG'
-        downloadLink.href = window.URL.createObjectURL(xmlBlob)
-        downloadLink.onclick = function (event) {
-          document.body.removeChild(event.target)
-        }
-        downloadLink.style.visibility = 'hidden'
-        document.body.appendChild(downloadLink)
-        // downloadLink.click();
-        var timestamp = new Date().getTime().toString()
-        // console.log('POST request')
-        // var data = {
-        //   'name': timestamp,
-        //   'owner': this.$store.state.user.userId,
-        //   'file': xmlBlob
+        // const result = this.bpmnModeler.saveXML({ format: true })
+        // const { xml } = result
+        // var xmlBlob = new Blob([xml], { type: 'application/bpmn20-xml;charset=UTF-8,' })
+        // var downloadLink = document.createElement('a')
+        // downloadLink.download = 'ops-coffee-bpmn.bpmn'
+        // downloadLink.innerHTML = 'Get BPMN SVG'
+        // downloadLink.href = window.URL.createObjectURL(xmlBlob)
+        // downloadLink.onclick = function (event) {
+        //   document.body.removeChild(event.target)
         // }
-        var formData = new FormData()
-        formData.append('name', timestamp)
-        formData.append('owner', this.$store.state.user.userId)
-        formData.append('file', xmlBlob)
-        this.$Spin.show()
-        this.addProcessAction(formData).then(() => {
-          this.$Message.success('添加流程成功')
-        }).catch(err => this.$Message.error(err.message))
-          .finally(() => this.$Spin.hide())
+        // downloadLink.style.visibility = 'hidden'
+        // document.body.appendChild(downloadLink)
+        // downloadLink.click();
+        var _this = this
+        if (this.processData === null) {
+          const result = this.bpmnModeler.saveXML({ format: true }).then(
+            function (res) {
+              var timestamp = new Date().toString()
+              var name = _this.processName + '_' + timestamp
+              var xmlBlob = new Blob([res.xml], { type: 'application/bpmn20-xml;charset=UTF-8,' })
+              var formData = new FormData()
+              formData.append('name', name)
+              formData.append('owner', _this.$store.state.user.userId)
+              formData.append('file', xmlBlob)
+              _this.$Spin.show()
+              _this.addProcessAction(formData).then(() => {
+                _this.$Message.success('添加流程成功')
+              }).catch(err => _this.$Message.error(err.message))
+                .finally(() => _this.$Spin.hide())
+            }
+          )
+        } else {
+          const result = this.bpmnModeler.saveXML({ format: true }).then(
+            function (res) {
+              _this.processData.bpmn = res.xml
+              _this.$Spin.show()
+              // data = { ..._this.processData, id: this.processData.id }
+              _this.modifyProcessAction(_this.processData).then(() => {
+                _this.$Message.success('流程修改成功')
+              }).catch(err => _this.$Message.error(err.message))
+                .finally(() => _this.$Spin.hide())
+            }
+          )
+        }
       } catch (err) {
         console.log(err)
       }

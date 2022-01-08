@@ -8,7 +8,7 @@
 import VueBpmn from '_c/vue-bpmn'
 
 export default {
-  name: 'process-configuration',
+  name: 'ProcessConfiguration',
   components: {
     VueBpmn
   },
