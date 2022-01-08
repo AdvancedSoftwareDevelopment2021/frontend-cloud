@@ -49,7 +49,8 @@ export default {
       port: getOr('')('port')(this.edgeData).toString(),
       api: getOr('')('api')(this.edgeData),
       interval: getOr('')('interval')(this.edgeData).toString(),
-      timeUnit: getOr(DAY)('timeUnit')(this.edgeData)
+      timeUnit: getOr(DAY)('timeUnit')(this.edgeData),
+      owner: this.$store.state.user.userId
     }
     return {
       /**

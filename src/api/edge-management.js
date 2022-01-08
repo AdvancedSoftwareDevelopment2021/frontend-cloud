@@ -1,9 +1,10 @@
 import axios from '@/libs/api.request'
+import store from '@/store'
 
 const url = '/edge'
 
 export const getEdgeList = () => axios.request({
-  url: `${url}/list`,
+  url: `${url}/list/user/${store.state.user.userId}`,
   method: 'get'
 })
 
@@ -13,7 +14,7 @@ export const removeEdge = (id) => axios.request({
 })
 
 export const addEdge = (data) => axios.request({
-  url: `${url}`,
+  url: `${url}/`,
   data: data,
   method: 'post'
 })
