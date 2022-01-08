@@ -144,34 +144,35 @@ export default {
     },
     saveBPMN () {
       try {
-        const result = this.bpmnModeler.saveXML({format: true});
-        const { xml } = result;
-        var xmlBlob = new Blob([xml], {type:"application/bpmn20-xml;charset=UTF-8,"});
-        var downloadLink = document.createElement("a");
-        // downloadLink.download = "ops-coffee-bpmn.bpmn";
-        // downloadLink.innerHTML = "Get BPMN SVG";    
-        // downloadLink.href = window.URL.createObjectURL(xmlBlob);    
-        // downloadLink.onclick = function(event) {      
-        //   document.body.removeChild(event.target);    
-        // };    
-        // downloadLink.style.visibility = "hidden";    
-        // document.body.appendChild(downloadLink);    
-        // downloadLink.click(); 
-        const timestamp = new Date().getTime();
-        console.log("POST request");
-        var data = {
-          name: timestamp,
-          owner: this.$store.state.userId,
-          file: xmlBlob,
+        const result = this.bpmnModeler.saveXML({ format: true })
+        const { xml } = result
+        var xmlBlob = new Blob([xml], { type: 'application/bpmn20-xml;charset=UTF-8,' })
+        var downloadLink = document.createElement('a')
+        downloadLink.download = 'ops-coffee-bpmn.bpmn'
+        downloadLink.innerHTML = 'Get BPMN SVG'
+        downloadLink.href = window.URL.createObjectURL(xmlBlob)
+        downloadLink.onclick = function (event) {
+          document.body.removeChild(event.target)
         }
-        this.$Spin.show();
+        downloadLink.style.visibility = 'hidden'
+        document.body.appendChild(downloadLink)
+        // downloadLink.click();
+        const formData = new FormData()
+        var timestamp = new Date().getTime().toString()
+        console.log('POST request')
+        var data = {
+          'name': timestamp,
+          'owner': this.$store.state.user.userId,
+          'file': formData
+        }
+        console.log(data)
+        this.$Spin.show()
         this.addProcessAction(data).then(() => {
           this.$Message.success('添加流程成功')
         }).catch(err => this.$Message.error(err.message))
           .finally(() => this.$Spin.hide())
-      }
-      catch (err) {    
-        console.log(err);  
+      } catch (err) {
+        console.log(err)
       }
     },
     // 调整左侧工具栏排版

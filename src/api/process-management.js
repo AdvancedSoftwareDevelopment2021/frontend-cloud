@@ -19,8 +19,15 @@ export const removeProcess = (id) => axios.request({
 
 export const addProcess = (data) => axios.request({
   url: `${url}`,
-  data: data,
-  method: 'post'
+  params: {
+    name: data.name,
+    owner: data.owner,
+    file: data.file
+  },
+  method: 'post',
+  headers: {
+    'Content-Type': 'multipart/form-data'
+  }
 })
 
 export const modifyProcess = (id, data) => axios.request({
