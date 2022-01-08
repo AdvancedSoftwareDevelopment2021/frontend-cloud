@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <paged-table /> -->
     <vue-bpmn />
   </div>
 </template>

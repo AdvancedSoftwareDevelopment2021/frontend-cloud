@@ -109,10 +109,10 @@ export default [
   },
   {
     path: '/process_management',
-    name: '流程',
+    name: ' 流程管理',
     component: Main,
     meta: {
-      title: '流程',
+      title: ' 流程管理',
       icon: 'ios-albums'
     },
     children: [

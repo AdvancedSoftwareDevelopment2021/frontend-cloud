@@ -1,20 +1,22 @@
 <template>
   <div class="containers">
     <div class="canvas" ref="canvas" />
-    <panel v-if="bpmnModeler" :modeler="bpmnModeler" />
+    <property-panel v-if="bpmnModeler" :modeler="bpmnModeler" />
     <div class="toolbar">
-      <a title="download">下载</a>
-      <a ref="saveDiagram" href="javascript:" title="download BPMN diagram">BPMN</a>
-      <a ref="saveSvg" href="javascript:" title="download as SVG image">SVG</a>
+      <Button title="download" @click="saveBPMN">添加流程</Button>
+      <!-- <a ref="saveDiagram" href="javascript:" title="download BPMN diagram">BPMN</a>
+      <a ref="saveSvg" href="javascript:" title="download as SVG image">SVG</a> -->
     </div>
   </div>
 </template>
 
 <script>
 import BpmnModeler from 'bpmn-js/lib/Modeler' // bpmn-js 设计器
-import panel from './PropertyPanel' // 属性面板
+import PropertyPanel from './PropertyPanel' // 属性面板
 import BpmData from './BpmData'
+import { mapActions } from 'vuex'
 export default {
+  name: 'VueBpmn',
   data () {
     return {
       bpmnModeler: null,
@@ -23,9 +25,10 @@ export default {
     }
   },
   components: {
-    panel
+    PropertyPanel
   },
   methods: {
+    ...mapActions(['addProcessAction']),
     createNewDiagram () {
       const bpmnXmlStr = `
       <?xml version="1.0" encoding="UTF-8"?>
@@ -138,6 +141,38 @@ export default {
           this.adjustPalette()
         }
       })
+    },
+    saveBPMN () {
+      try {
+        const result = this.bpmnModeler.saveXML({format: true});
+        const { xml } = result;
+        var xmlBlob = new Blob([xml], {type:"application/bpmn20-xml;charset=UTF-8,"});
+        var downloadLink = document.createElement("a");
+        // downloadLink.download = "ops-coffee-bpmn.bpmn";
+        // downloadLink.innerHTML = "Get BPMN SVG";    
+        // downloadLink.href = window.URL.createObjectURL(xmlBlob);    
+        // downloadLink.onclick = function(event) {      
+        //   document.body.removeChild(event.target);    
+        // };    
+        // downloadLink.style.visibility = "hidden";    
+        // document.body.appendChild(downloadLink);    
+        // downloadLink.click(); 
+        const timestamp = new Date().getTime();
+        console.log("POST request");
+        var data = {
+          name: timestamp,
+          owner: this.$store.state.userId,
+          file: xmlBlob,
+        }
+        this.$Spin.show();
+        this.addProcessAction(data).then(() => {
+          this.$Message.success('添加流程成功')
+        }).catch(err => this.$Message.error(err.message))
+          .finally(() => this.$Spin.hide())
+      }
+      catch (err) {    
+        console.log(err);  
+      }
     },
     // 调整左侧工具栏排版
     adjustPalette () {
