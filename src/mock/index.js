@@ -1,5 +1,5 @@
 import Mock from 'mockjs'
-import { getUserInfo, login, logout } from './login'
+// import { getUserInfo, login, logout } from './login'
 import { getDragList, getOrgData, getTableData, getTreeSelectData, uploadImage } from './data'
 import { getContentByMsgId, getMessageInit, hasRead, messageCount, removeReaded, restoreTrash } from './user'
 // import { deleteEdge, getEdgeList, modifyEdge, addEdge } from './edge-management'
@@ -11,9 +11,9 @@ Mock.setup({
 })
 
 // 登录相关和获取用户信息
-Mock.mock(/\/login/, login)
-Mock.mock(/\/get_info/, getUserInfo)
-Mock.mock(/\/logout/, logout)
+// Mock.mock(/\/login/, login)
+// Mock.mock(/\/get_info/, getUserInfo)
+// Mock.mock(/\/logout/, logout)
 Mock.mock(/\/get_table_data/, getTableData)
 Mock.mock(/\/get_drag_list/, getDragList)
 Mock.mock(/\/save_error_logger/, 'success')
