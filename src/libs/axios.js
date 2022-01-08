@@ -30,7 +30,7 @@ class HttpRequest {
       if (hasCode(data) && !success(data.code)) {
         return Promise.reject(new Error(data.message))
       }
-      return hasCode(data) ? data.object : data
+      return hasCode(data) ? data.data : data
     }, error => Promise.reject(error))
   }
   /**
