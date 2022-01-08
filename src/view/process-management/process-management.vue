@@ -19,6 +19,19 @@
         :total=" processList.length"
         style="margin-bottom: 50px"
       />
+      <Modal
+        v-model="modalControl"
+        title="下发流程"
+        footer-hide
+        :closable="false"
+      >
+        <issue-form
+          :issueProcess="issueProcess"
+          :parentCancelBtnClick="modalCancelBtnClick"
+          :parentConfirmBtnClick="modalConfirmBtnClick"
+        >
+        </issue-form>
+      </Modal>
     </Row>
   </Card>
 </template>
@@ -36,6 +49,8 @@ export default {
   data: function () {
     return {
       loading: true,
+      modalControl: false,
+      issueProcess: null,
       columns: [
         {
           title: 'id',
@@ -63,7 +78,7 @@ export default {
                   size: 'small', type: 'error'
                 },
                 buttonText: '删除',
-                popTipTitle: '确定要删除这个边缘端？',
+                popTipTitle: '确定要删除这个流程？',
                 ok: () => this.handleDelete(row.id)
               }
             })
@@ -95,7 +110,8 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.handleConnect(row.id)
+                    this.modalControl = true
+                    this.issueProcess = row
                   }
                 }
               },
@@ -127,6 +143,12 @@ export default {
       this.setProcess(data)
       this.$router.push({ path: 'process-modification' })
     },
+    modalCancelBtnClick() {
+      this.modalControl = false
+    },
+    modalConfirmBtnClick() {
+      this.modalControl = false
+    }
   },
   mounted () {
     this.loading = true
@@ -136,7 +158,7 @@ export default {
   },
   computed: {
     ...mapState({
-       processList: (state) => state. processManagement. processList
+       processList: (state) => state.processManagement.processList
     })
   }
 }

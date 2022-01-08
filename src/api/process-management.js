@@ -1,9 +1,10 @@
 import axios from '@/libs/api.request'
+import store from '@/store'
 
 const url = '/process'
 
 export const getProcessList = () => axios.request({
-  url: `${url}`,
+  url: `${url}/user/${store.state.user.userId}`,
   method: 'get'
 })
 

@@ -3,7 +3,7 @@
     <div class="canvas" ref="canvas" />
     <property-panel v-if="bpmnModeler" :modeler="bpmnModeler" />
     <div class="toolbar">
-      <Input v-model="processName" placeholder="输入流程名称" style="width: 300px" />
+      <Input v-if="processData === null" v-model="processName" placeholder="输入流程名称" style="width: 300px" />
       <Button title="download" @click="saveBPMN">保存流程</Button>
       <!-- <a ref="saveDiagram" href="javascript:" title="download BPMN diagram">BPMN</a>
       <a ref="saveSvg" href="javascript:" title="download as SVG image">SVG</a> -->
@@ -18,7 +18,7 @@ import BpmData from './BpmData'
 import { mapActions } from 'vuex'
 
 export default {
-  name: 'VueBpmn',
+  name: 'vueBpmn',
   props: {
     processData: { type: Object, default: null }
   },
