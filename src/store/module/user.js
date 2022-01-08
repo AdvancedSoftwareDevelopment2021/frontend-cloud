@@ -9,7 +9,7 @@ import {
   restoreTrash,
   register
 } from '@/api/user'
-import { getToken, setToken } from '@/libs/util'
+import { getToken, setToken, getUserIdFromToken } from '@/libs/util'
 
 export default {
   state: {
@@ -82,6 +82,8 @@ export default {
           password
         }).then(res => {
           commit('setToken', res)
+          const userId = getUserIdFromToken(res)
+          commit('setUserId', userId)
           resolve()
         }).catch(err => {
           reject(err)
@@ -112,7 +114,7 @@ export default {
           password,
           permission
         }).then(res => {
-          commit('setToken', res)
+          this.dispatch('handleLogin', { username, password })
           resolve()
         }).catch(err => {
           reject(err)

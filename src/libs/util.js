@@ -1,3 +1,4 @@
+import { decode } from 'jsonwebtoken'
 import Cookies from 'js-cookie'
 // cookie保存的天数
 import config from '@/config'
@@ -22,6 +23,20 @@ export const getToken = () => {
  * @returns {boolean}
  */
 export const success = (code) => code === 0
+
+/**
+ * 根据 JWT 获取用户的 id
+ * @param {string} token JWT
+ * @returns {string} id
+ */
+export const getUserIdFromToken = (token) => decode(token).aud
+
+/**
+ * 根据 JWT 获取用户名
+ * @param {string} token JWT
+ * @returns {string} 用户名
+ */
+export const getUsernameFromToken = (token) => decode(token).username
 
 export const hasChild = (item) => {
   return item.children && item.children.length !== 0
