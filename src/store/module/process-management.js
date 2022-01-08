@@ -108,5 +108,17 @@ export default {
         })
       })
     },
+    /**
+     * 流程下发
+     */
+    issueProcessAction ({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        issueProcess(data).then(res => {
+          resolve()
+        }).catch(err => {
+          reject(err)
+        })
+      })
+    }
   }
 }

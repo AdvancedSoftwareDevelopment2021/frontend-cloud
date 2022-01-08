@@ -1,45 +1,40 @@
 <template>
   <div>
     <Form ref="formItem" :model="formItem" :label-width="80">
-      
-      <Row :gutter="10">
-        <Col span="6">
-          <Select v-model="edgeInfo">
-            <Option
-              v-for="edgeItem in edgeList"
-              :value="edgeItem.port"
-              :key="edgeItem.ip"
-            >
-              {{ edgeItem.name}}
-            </Option>
-          </Select>
-        </Col>
-        <Col span="1">
-          <Button
-            @click="handleRemove(listIndex)"
-            size="small"
-            shape="circle"
-          >
-            <Icon type="md-close" />
-          </Button>
-        </Col>
-      </Row>
-      <Row :gutter="8" type="flex" justify="end">
-        <Col>
-          <Button @click="cancelBtnClick">取消</Button>
-        </Col>
-        <Col>
-          <Button type="primary" :loading="loading" @click="confirmBtnClick">
-            确认
-          </Button>
-        </Col>
-      </Row>
+      <FormItem>
+        <Row :gutter="10">
+          <Col span="6">
+            <Select v-model="edgeInfo">
+              <Option
+                v-for="edgeItem in edgeList"
+                :value="edgeItem"
+                :key="edgeItem"
+              >
+                {{ edgeItem.name}}
+              </Option>
+            </Select>
+          </Col>
+        </Row>
+      </FormItem>
+      <FormItem class="footer">
+        <Row :gutter="8" type="flex" justify="end">
+          <Col>
+            <Button @click="cancelBtnClick">取消</Button>
+          </Col>
+          <Col>
+            <Button type="primary" :loading="loading" @click="confirmBtnClick">
+              确认
+            </Button>
+          </Col>
+        </Row>
+      </FormItem>
     </Form>
   </div>
 </template>
+
 <script>
 // TODO: remove property valueIndex
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
   name: 'issueForm',
   components: {
@@ -60,7 +55,7 @@ export default {
     let formItem = JSON.parse(JSON.stringify(this.deviceInfo))
     // formItem.values[0] = {...formItem.values[0], valueIndex}
     return {
-      edge,
+      edgeInfo,
       valueIndex,
       formItem,
       loading: false,
@@ -75,41 +70,39 @@ export default {
     }),
   },
   methods: {
+    ...mapActions(['issueProcessAction']),
     // 因为当parentConfirmBtnClick为Component addDevice所传的方法时，是异步方法，所以要在这加async用来等待异步完成
     async confirmBtnClick () {
-      let newDevice = this.formItem
       this.loading = true
-      await this.parentConfirmBtnClick(newDevice)
+      var requestData = {
+        'processDto': this.issueProcess,
+        'ip': this.edgeInfo.ip,
+        'port': this.edgeInfo.port
+      }
+      console.log(requestData)
+      await this.issueProcessAction(requestData).then(() => {
+        this.$Message.success('流程下发成功')
+        }).catch(err => this.$Message.error(err.message))
+          .finally(() => this.$Spin.hide())
+      await this.parentConfirmBtnClick()
       this.loading = false
-      this.resetFormItem()
     },
     cancelBtnClick () {
       this.parentCancelBtnClick()
-      this.resetFormItem()
     },
-    resetFormItem () {
-      // this.valueIndex = 1
-      this.formItem = JSON.parse(JSON.stringify(this.deviceInfo))
-      // console.log(`reset: ${JSON.stringify(this.deviceInfo)}`)
-    },
-    handleAdd () {
-      // this.valueIndex++
-      this.formItem.values.push({
-        // valueIndex: this.valueIndex,
-        name: '',
-        type: '',
-        protocol: ''
-      })
-    },
-    handleRemove (listIndex) {
-      // console.log("Delete listItem: " + listIndex);
-      this.formItem.values.splice(listIndex, 1)
+  },
+  watch: {
+    issueProcess(newVal, oldVal) {
+      console.log(`${newVal}, ${oldVal}`)
     }
   },
   mounted () {
     this.$nextTick(() => {
-      // console.log(this._uid)
     })
   }
 }
 </script>
+
+<style scoped>
+
+</style>

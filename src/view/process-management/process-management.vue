@@ -19,7 +19,8 @@
         :total=" processList.length"
         style="margin-bottom: 50px"
       />
-      <Modal
+    </Row>
+    <Modal
         v-model="modalControl"
         title="下发流程"
         footer-hide
@@ -32,19 +33,20 @@
         >
         </issue-form>
       </Modal>
-    </Row>
   </Card>
 </template>
 
 <script>
 import PagedTable from '_c/paged-table/paged-table.vue'
 import PopConfirmButton from '_c/pop-confirm-button'
+import issueForm from '_c/issue-form/issue-form'
 import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   name: 'ProcessManagement',
   components: {
-    PagedTable
+    PagedTable,
+    issueForm
   },
   data: function () {
     return {

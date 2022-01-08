@@ -24,6 +24,12 @@ export const addProcess = (data) => axios.request({
   method: 'post'
 })
 
+export const issueProcess = (data) => axios.request({
+  url: `${url}`,
+  data: data,
+  method: 'post'
+})
+
 export const modifyProcess = (id, data) => axios.request({
   url: `${url}/${id}`,
   data: data,
