@@ -21,7 +21,7 @@ export const getToken = () => {
  * @param {number} code 后端返回的自定义状态码
  * @returns {boolean}
  */
-export const success = (code) => code === 200
+export const success = (code) => code === 0
 
 export const hasChild = (item) => {
   return item.children && item.children.length !== 0
