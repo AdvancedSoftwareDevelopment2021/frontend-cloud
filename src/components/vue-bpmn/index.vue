@@ -157,17 +157,19 @@ export default {
         downloadLink.style.visibility = 'hidden'
         document.body.appendChild(downloadLink)
         // downloadLink.click();
-        const formData = new FormData()
         var timestamp = new Date().getTime().toString()
-        console.log('POST request')
-        var data = {
-          'name': timestamp,
-          'owner': this.$store.state.user.userId,
-          'file': formData
-        }
-        console.log(data)
+        // console.log('POST request')
+        // var data = {
+        //   'name': timestamp,
+        //   'owner': this.$store.state.user.userId,
+        //   'file': xmlBlob
+        // }
+        var formData = new FormData()
+        formData.append('name', timestamp)
+        formData.append('owner', this.$store.state.user.userId)
+        formData.append('file', xmlBlob)
         this.$Spin.show()
-        this.addProcessAction(data).then(() => {
+        this.addProcessAction(formData).then(() => {
           this.$Message.success('添加流程成功')
         }).catch(err => this.$Message.error(err.message))
           .finally(() => this.$Spin.hide())

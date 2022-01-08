@@ -14,7 +14,6 @@ class HttpRequest {
        * 如果存在当前用户的 token，则在发送请求时带上 token
        */
       if (getToken()) {
-        console.log(config)
         return {
           ...config,
           headers: {
