@@ -14,7 +14,8 @@ import { getToken, setToken, getUserIdFromToken } from '@/libs/util'
 export default {
   state: {
     userName: '',
-    userId: getUserIdFromToken(getToken()),
+    // userId: getUserIdFromToken(getToken()),
+    userId: '',
     avatarImgPath: '',
     token: getToken(),
     access: '',
