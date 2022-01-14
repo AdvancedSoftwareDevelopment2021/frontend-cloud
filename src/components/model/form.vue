@@ -19,9 +19,9 @@
           :value="item"
         /> </Select
     ></FormItem>
-    <FormItem v-if="mode === 'ADD'" label="上传文件" prop="file">
+    <FormItem v-if="mode === 'ADD'" label="上传模型文件" prop="modelFile">
       <Upload action="/" :before-upload="handleUpload">
-        <Button icon="ios-cloud-upload-outline">上传模型文件</Button>
+        <Button icon="ios-cloud-upload-outline">选择文件</Button>
       </Upload>
     </FormItem>
     <FormItem class="footer">
@@ -80,8 +80,8 @@ export default {
           required("时间间隔不可为空"),
           { validator: intervalValidator, trigger: "blur" },
         ],
+        // modelFile: [required("文件不能为空")]
       },
-      file: null,
     };
   },
   methods: {
@@ -102,7 +102,7 @@ export default {
       this.$refs.formRef.resetFields();
     },
     handleUpload(file) {
-      this.form.file = file;
+      this.form.modelFile = file;
       return false;
     },
   },

@@ -180,6 +180,15 @@ export default [
           hideInMenu: true
         },
         component: () => import('@/view/model-management/modify-model.vue')
+      },
+      {
+        path: 'send_management',
+        name: '修改模型',
+        meta: {
+          title: '修改模型',
+          hideInMenu: true
+        },
+        component: () => import('@/view/model-management/send-management.vue')
       }
     ]
   },

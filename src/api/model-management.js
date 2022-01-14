@@ -28,7 +28,7 @@ export const deleteModelApi = (modelId) => {
 export const updateModelApi = ({ modelId, modelInfo }) => {
   return axios.request({
     url: `${url}/${modelId}`,
-    method: "post",
+    method: "put",
     data: modelInfo,
   });
 };

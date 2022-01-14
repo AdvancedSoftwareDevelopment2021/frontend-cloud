@@ -1,17 +1,18 @@
 <template>
   <Card>
+    Send management page
     <Row type="flex" justify="end">
       <Button
         class="add-model"
         type="primary"
         icon="md-add"
         ghost
-        to="/model_management/create_model"
+        @click="handleAdd"
       >
-        新增模型
+        新增下发边缘
       </Button>
     </Row>
-    <Row>
+    <!-- <Row>
       <paged-table
         :loading="loading"
         :columns="columns"
@@ -19,7 +20,7 @@
         :total="modelList.length"
         style="margin-bottom: 50px"
       />
-    </Row>
+    </Row> -->
   </Card>
 </template>
 
@@ -31,23 +32,30 @@ import { timeUnitNames } from "@/constants/timeUnits";
 
 export default {
   components: { PagedTable, PopConfirmButton },
-  name: "model-management",
+  name: "send-management",
   data() {
     return {
       loading: true,
       columns: [
         {
-          title: "id",
-          key: "id",
-        },
-        {
           title: "名称",
           key: "name",
         },
         {
-          // TODO: 如何形容owner
-          title: "创建角色",
-          key: "owner",
+          title: "描述",
+          key: "description",
+        },
+        {
+          title: "主机名或ip地址",
+          key: "ip",
+        },
+        {
+          title: "端口号",
+          key: "port",
+        },
+        {
+          title: "连接路径",
+          key: "api",
         },
         {
           title: "时间间隔",
@@ -56,12 +64,13 @@ export default {
             h("span", row.interval + timeUnitNames[row.timeUnit]),
         },
         {
-          title: "描述",
-          key: "description",
+          title: "注册时间",
+          key: "registerTimestamp",
         },
         {
-          title: "创建时间",
-          key: "registerTimestamp",
+          title: "状态",
+          key: "status",
+          render: (h, { row }) => h("span", edgeStatusNames[row.status]),
         },
         {
           title: "操作",
@@ -74,11 +83,11 @@ export default {
                   type: "error",
                 },
                 buttonText: "删除",
-                popTipTitle: "确定要删除这个流程？",
+                popTipTitle: "确定要删除这个边缘端？",
                 ok: () => this.handleDelete(row.id),
               },
             });
-            const editButton = h(
+            const connectButton = h(
               "Button",
               {
                 props: {
@@ -90,31 +99,16 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.handleEdit(row);
+                    this.handleConnect(row.id);
                   },
                 },
               },
-              "编辑"
+              "连接"
             );
-            const issueButton = h(
-              "Button",
-              {
-                props: {
-                  size: "small",
-                  type: "primary",
-                },
-                style: {
-                  marginRight: "1%",
-                },
-                on: {
-                  click: () => {
-                    this.handleSend(row);
-                  },
-                },
-              },
-              "下发管理"
-            );
-            const buttons = [issueButton, editButton, deleteButton];
+            const buttons = [
+              connectButton,
+              deleteButton,
+            ];
             return h("div", buttons);
           },
         },
@@ -123,16 +117,13 @@ export default {
   },
   computed: {
     ...mapState({
-      modelList: (state) => state.modelManagement.modelList,
+      edgeList: (state) => state.edgeManagement.edgeList,
     }),
   },
   methods: {
     ...mapMutations(["setModel"]),
-    ...mapActions(["getAllModelListAction", "deleteModelAction"]),
-    handleEdit(data) {
-      this.setModel(data);
-      this.$router.push({ path: "modify_model" });
-    },
+    ...mapActions(["connectEdgeAction"]),
+    ...mapActions(["getEdgeListAction", "deleteModelAction"]),
     handleDelete(id) {
       this.deleteModelAction(id)
         .then(() => this.$Message.success("删除成功"))
@@ -140,14 +131,33 @@ export default {
     },
     handleSend(data) {
       this.setModel(data);
-      this.$router.push({ path: "send_management" })
+    //   this.$router.push({ path: "send_management" });
+    },
+    handleDelete(id) {
+      //   this.removeEdgeAction(id)
+      //     .then(() => this.$Message.success("删除成功"))
+      //     .catch((err) => this.$Message.error(err.message));
+    },
+    handleConnect(id) {
+      //   this.loading = true;
+      //   this.connectEdgeAction(id)
+      //     .then(() => {})
+      //     .catch((err) => this.$Message.error(err.message))
+      //     .finally(() => {
+      //       this.loading = false;
+      //     });
     },
   },
   async mounted() {
     this.loading = true;
-    await this.getAllModelListAction();
-    this.$nextTick(() => {});
-    this.loading = false;
+    this.getEdgeListAction()
+      .then(() => {
+        this.loading = false;
+      })
+      .catch((err) => this.$Message.error(err.message));
+    this.$nextTick(() => {
+      console.log(this.edgeList);
+    });
   },
 };
 </script>
