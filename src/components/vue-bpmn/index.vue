@@ -32,42 +32,6 @@ export default {
         <?xml version="1.0" encoding="UTF-8"?>
         <bpmn2:definitions xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
           <bpmn2:process id="process1567044459787" name="流程1567044459787">
-            <bpmn2:documentation>描述</bpmn2:documentation>
-            <bpmn2:startEvent id="StartEvent_01ydzqe" name="开始">
-              <bpmn2:outgoing>SequenceFlow_1qw929z</bpmn2:outgoing>
-            </bpmn2:startEvent>
-            <bpmn2:sequenceFlow id="SequenceFlow_1qw929z" sourceRef="StartEvent_01ydzqe" targetRef="Task_1piqdk6" />
-            <bpmn2:userTask id="Task_1piqdk6" name="供料">
-              <bpmn2:incoming>SequenceFlow_1qw929z</bpmn2:incoming>
-              <bpmn2:outgoing>SequenceFlow_11h4o22</bpmn2:outgoing>
-            </bpmn2:userTask>
-            <bpmn2:exclusiveGateway id="ExclusiveGateway_0k39v3u">
-              <bpmn2:incoming>SequenceFlow_11h4o22</bpmn2:incoming>
-              <bpmn2:outgoing>SequenceFlow_1iu7pfe</bpmn2:outgoing>
-              <bpmn2:outgoing>SequenceFlow_04uqww2</bpmn2:outgoing>
-            </bpmn2:exclusiveGateway>
-            <bpmn2:sequenceFlow id="SequenceFlow_11h4o22" sourceRef="Task_1piqdk6" targetRef="ExclusiveGateway_0k39v3u" />
-            <bpmn2:sequenceFlow id="SequenceFlow_1iu7pfe" sourceRef="ExclusiveGateway_0k39v3u" targetRef="Task_10fqcwp" />
-            <bpmn2:userTask id="Task_10fqcwp" name="装配">
-              <bpmn2:incoming>SequenceFlow_1iu7pfe</bpmn2:incoming>
-              <bpmn2:outgoing>SequenceFlow_1xod8nh</bpmn2:outgoing>
-            </bpmn2:userTask>
-            <bpmn2:sequenceFlow id="SequenceFlow_04uqww2" sourceRef="ExclusiveGateway_0k39v3u" targetRef="Task_15n23yh" />
-            <bpmn2:userTask id="Task_15n23yh" name="分发">
-              <bpmn2:incoming>SequenceFlow_04uqww2</bpmn2:incoming>
-              <bpmn2:outgoing>SequenceFlow_0c8wrs4</bpmn2:outgoing>
-            </bpmn2:userTask>
-            <bpmn2:exclusiveGateway id="ExclusiveGateway_1sq33g6">
-              <bpmn2:incoming>SequenceFlow_0c8wrs4</bpmn2:incoming>
-              <bpmn2:incoming>SequenceFlow_1xod8nh</bpmn2:incoming>
-              <bpmn2:outgoing>SequenceFlow_0h8za82</bpmn2:outgoing>
-            </bpmn2:exclusiveGateway>
-            <bpmn2:sequenceFlow id="SequenceFlow_0c8wrs4" sourceRef="Task_15n23yh" targetRef="ExclusiveGateway_1sq33g6" />
-            <bpmn2:sequenceFlow id="SequenceFlow_1xod8nh" sourceRef="Task_10fqcwp" targetRef="ExclusiveGateway_1sq33g6" />
-            <bpmn2:endEvent id="EndEvent_0pnmjd3">
-              <bpmn2:incoming>SequenceFlow_0h8za82</bpmn2:incoming>
-            </bpmn2:endEvent>
-            <bpmn2:sequenceFlow id="SequenceFlow_0h8za82" sourceRef="ExclusiveGateway_1sq33g6" targetRef="EndEvent_0pnmjd3" />
           </bpmn2:process>
           <bpmndi:BPMNDiagram id="BPMNDiagram_1">
             <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="process1567044459787">
@@ -172,8 +136,8 @@ export default {
         if (this.processData === null) {
           const result = this.bpmnModeler.saveXML({ format: true }).then(
             function (res) {
-              var timestamp = new Date().toString()
-              var name = _this.processName + '_' + timestamp
+              // var timestamp = new Date().toString()
+              var name = _this.processName
               var xmlBlob = new Blob([res.xml], { type: 'application/bpmn20-xml;charset=UTF-8,' })
               var formData = new FormData()
               formData.append('name', name)

@@ -19,6 +19,8 @@
     "cropperjs": "^1.2.2",
     "dayjs": "^1.7.7",
     "echarts": "^4.9.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-standard": "^5.0.0",
     "eslint-plugin-vue": "^7.4.0",
     "html2canvas": "^1.0.0-alpha.12",
     "iview": "^3.2.2",
@@ -63,7 +65,6 @@
     "not ie <= 8"
   ],
   "gitHooks": {
-    "pre-commit": "lint-staged"
   },
   "lint-staged": {
     "*.js": [
