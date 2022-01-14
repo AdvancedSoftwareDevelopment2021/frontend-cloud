@@ -44,6 +44,7 @@ export default {
         {
           title: "名称",
           key: "name",
+          width: "150px"
         },
         {
           title: "状态",
@@ -66,6 +67,7 @@ export default {
         {
           title: "创建时间",
           key: "registerTimestamp",
+          width: "200px"
         },
         {
           title: "操作",
