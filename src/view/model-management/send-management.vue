@@ -10,7 +10,7 @@
       >
         新增下发边缘
       </Button>
-      <Modal v-model="modal" title="绑定设备" footer-hide :closable="false">
+      <Modal v-model="modal" title="绑定边缘端" footer-hide :closable="false">
         <Form ref="bindingForm" :model="bindingForm" :label-width="80">
           <FormItem label="设备名称">
             <Row>

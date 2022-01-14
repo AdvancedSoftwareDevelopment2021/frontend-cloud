@@ -74,7 +74,7 @@ export default {
                   type: "error",
                 },
                 buttonText: "删除",
-                popTipTitle: "确定要删除这个流程？",
+                popTipTitle: "确定要删除这个模型？",
                 ok: () => this.handleDelete(row.id),
               },
             });
@@ -114,7 +114,8 @@ export default {
               },
               "下发管理"
             );
-            const buttons = [issueButton, editButton, deleteButton];
+            // const buttons = [issueButton, editButton, deleteButton];
+            const buttons = [issueButton, deleteButton];
             return h("div", buttons);
           },
         },
