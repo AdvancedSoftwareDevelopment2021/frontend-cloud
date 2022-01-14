@@ -3,12 +3,11 @@ import store from "@/store";
 
 const url = "/edge";
 
-export const getEdgeList = () => {
+export const getEdgeList = () =>
   axios.request({
     url: `${url}/list/user/${store.state.user.userId}`,
     method: "get",
   });
-};
 
 export const removeEdge = (id) =>
   axios.request({
