@@ -7,10 +7,20 @@
     <FormItem label="描述" prop="description"
       ><Input v-model="form.description"></Input
     ></FormItem>
-    <FormItem label="时间间隔" prop="interval"
+    <FormItem label="是否更新" prop="train">
+      <RadioGroup v-model="form.train">
+        <Radio label="true">
+          <span>是</span>
+        </Radio>
+        <Radio label="false">
+          <span>否</span>
+        </Radio>
+      </RadioGroup>
+    </FormItem>
+    <FormItem v-if="form.train === 'true'" label="时间间隔" prop="interval"
       ><Input v-model="form.interval"></Input
     ></FormItem>
-    <FormItem label="单位" prop="timeUnit">
+    <FormItem v-if="form.train === 'true'" label="单位" prop="timeUnit">
       <Select v-model="form.timeUnit">
         <Option
           v-for="(item, index) in timeUnits"
@@ -23,6 +33,18 @@
       <Upload action="/" :before-upload="handleUpload">
         <Button icon="ios-cloud-upload-outline">选择文件</Button>
       </Upload>
+      <div v-if="form.modelFile !== null">
+        Upload file: {{ form.modelFile.name }}
+        <!-- <Button :loading="modelLoadingStatus" shape="circle"></Button> -->
+      </div>
+    </FormItem>
+    <FormItem v-if="mode === 'ADD'" label="上传模型脚本文件" prop="scriptFile">
+      <Upload action="/" :before-upload="handleScriptUpload">
+        <Button icon="ios-cloud-upload-outline">选择文件</Button>
+      </Upload>
+      <div v-if="form.scriptFile !== null">
+        Upload file: {{ form.scriptFile.name }}
+      </div>
     </FormItem>
     <FormItem class="footer">
       <Button type="primary" @click="handleSubmit()">提交</Button>
@@ -62,7 +84,22 @@ export default {
       interval: getOr("")("interval")(this.modelData).toString(),
       timeUnit: getOr(DAY)("timeUnit")(this.modelData),
       owner: this.$store.state.user.userId,
+      train: "true",
+      modelLoadingStatus: false,
+      modelFile: null,
+      scriptFile: null,
+      scriptFileName: null,
     };
+    const validateUpload = (rule, value, callback) => {
+      if (value === null) {
+        callback(new Error("请选择要上传的文件"));
+      } else if (value === null) {
+        callback(new Error("请选择要上传的文件"));
+      } else {
+        callback();
+      }
+    };
+
     return {
       /**
        * 表单数据对象
@@ -80,7 +117,12 @@ export default {
           required("时间间隔不可为空"),
           { validator: intervalValidator, trigger: "blur" },
         ],
-        // modelFile: [required("文件不能为空")]
+        modelFile: [
+          { request: true, validator: validateUpload, trigger: "change" },
+        ],
+        scriptFile: [
+          { request: true, validator: validateUpload, trigger: "change" },
+        ],
       },
     };
   },
@@ -105,6 +147,12 @@ export default {
       this.form.modelFile = file;
       return false;
     },
+    handleScriptUpload(file) {
+      this.form.scriptFile = file;
+      this.form.scriptFileName = file.name
+      return false;
+    },
   },
+  mounted() {},
 };
 </script>
