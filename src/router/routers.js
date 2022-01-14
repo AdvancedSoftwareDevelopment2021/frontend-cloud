@@ -109,10 +109,10 @@ export default [
   },
   {
     path: '/process_management',
-    name: ' 流程',
+    name: '流程',
     component: Main,
     meta: {
-      title: ' 流程',
+      title: '流程',
       icon: 'ios-albums'
     },
     children: [
@@ -142,6 +142,44 @@ export default [
           hideInMenu: true
         },
         component: () => import('@/view/process-management/process-modification')
+      }
+    ]
+  },
+  {
+    path: '/model_management',
+    name: '模型',
+    component: Main,
+    meta: {
+      title: '模型',
+      icon: 'ios-albums'
+    },
+    children: [
+      {
+        path: '',
+        name: '模型管理',
+        meta: {
+          title: '模型管理',
+          icon: 'ios-albums'
+        },
+        component: () => import('@/view/model-management/model-management.vue')
+      },
+      {
+        path: 'create_model',
+        name: '新增模型',
+        meta: {
+          title: '新增模型',
+          hideInMenu: true
+        },
+        component: () => import('@/view/model-management/create-model.vue')
+      },
+      {
+        path: 'modify_model',
+        name: '修改模型',
+        meta: {
+          title: '修改模型',
+          hideInMenu: true
+        },
+        component: () => import('@/view/model-management/modify-model.vue')
       }
     ]
   },

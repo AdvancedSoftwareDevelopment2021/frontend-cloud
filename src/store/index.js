@@ -5,6 +5,7 @@ import user from './module/user'
 import app from './module/app'
 import edgeManagement from './module/edge-management'
 import processManagement from './module/process-management'
+import modelManagement from './module/model-management'
 
 Vue.use(Vuex)
 
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     user,
     app,
     edgeManagement,
-    processManagement
+    processManagement,
+    modelManagement
   }
 })
