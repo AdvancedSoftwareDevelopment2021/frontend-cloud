@@ -3,7 +3,6 @@
     <Row type="flex" justify="center">
       <Col span="8">
         <model-form ref="formRef" :submit="handleSubmit" mode="ADD" />
-        Create model page
       </Col>
     </Row>
   </div>
@@ -33,7 +32,8 @@ export default {
       formData.append("timeUnit", data.timeUnit);
       formData.append("description", data.description);
       formData.append("train", data.train);
-      formData.append("scriptFile", data.scriptFile);
+      formData.append("trainScriptFile", data.trainScriptFile);
+      formData.append("predictScriptFile", data.predictScriptFile);
       this.$Spin.show();
       await this.insertModelAction(formData)
         .then(() => {

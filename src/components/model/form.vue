@@ -35,15 +35,30 @@
       </Upload>
       <div v-if="form.modelFile !== null">
         Upload file: {{ form.modelFile.name }}
-        <!-- <Button :loading="modelLoadingStatus" shape="circle"></Button> -->
       </div>
     </FormItem>
-    <FormItem v-if="mode === 'ADD'" label="上传模型脚本文件" prop="scriptFile">
-      <Upload action="/" :before-upload="handleScriptUpload">
+    <FormItem
+      v-if="mode === 'ADD' && form.train === 'true'"
+      label="上传云端模型训练脚本"
+      prop="trainScriptFile"
+    >
+      <Upload action="/" :before-upload="handleTrainScriptUpload">
         <Button icon="ios-cloud-upload-outline">选择文件</Button>
       </Upload>
-      <div v-if="form.scriptFile !== null">
-        Upload file: {{ form.scriptFile.name }}
+      <div v-if="form.trainScriptFile !== null">
+        Upload file: {{ form.trainScriptFile.name }}
+      </div>
+    </FormItem>
+    <FormItem
+      v-if="mode === 'ADD'"
+      label="上传检测脚本"
+      prop="predictScriptFile"
+    >
+      <Upload action="/" :before-upload="handlePredictScriptUpload">
+        <Button icon="ios-cloud-upload-outline">选择文件</Button>
+      </Upload>
+      <div v-if="form.predictScriptFile !== null">
+        Upload file: {{ form.predictScriptFile.name }}
       </div>
     </FormItem>
     <FormItem class="footer">
@@ -87,13 +102,11 @@ export default {
       train: "true",
       modelLoadingStatus: false,
       modelFile: null,
-      scriptFile: null,
-      scriptFileName: null,
+      trainScriptFile: null,
+      predictScriptFile: null,
     };
     const validateUpload = (rule, value, callback) => {
       if (value === null) {
-        callback(new Error("请选择要上传的文件"));
-      } else if (value === null) {
         callback(new Error("请选择要上传的文件"));
       } else {
         callback();
@@ -120,7 +133,10 @@ export default {
         modelFile: [
           { request: true, validator: validateUpload, trigger: "change" },
         ],
-        scriptFile: [
+        trainScriptFile: [
+          { request: true, validator: validateUpload, trigger: "change" },
+        ],
+        predictScriptFile: [
           { request: true, validator: validateUpload, trigger: "change" },
         ],
       },
@@ -147,9 +163,12 @@ export default {
       this.form.modelFile = file;
       return false;
     },
-    handleScriptUpload(file) {
-      this.form.scriptFile = file;
-      this.form.scriptFileName = file.name
+    handleTrainScriptUpload(file) {
+      this.form.trainScriptFile = file;
+      return false;
+    },
+    handlePredictScriptUpload(file) {
+      this.form.predictScriptFile = file;
       return false;
     },
   },

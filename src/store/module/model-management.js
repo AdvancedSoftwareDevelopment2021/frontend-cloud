@@ -22,7 +22,7 @@ export default {
         let ret = {
           ...item,
         };
-        if (item.train === 'true') {
+        if (item.train === "true") {
           ret.isTrain = "是";
           ret.time = item.interval + timeUnitNames[item.timeUnit];
         } else {
@@ -55,7 +55,7 @@ export default {
   },
   actions: {
     async getAllModelListAction({ state, commit, rootState }) {
-      let userId = rootState.user.userId
+      let userId = rootState.user.userId;
       let res = await getAllModelListApi(userId);
       commit("setModelList", res);
     },
@@ -70,23 +70,25 @@ export default {
       }
       return ret;
     },
-    deleteModelAction({ state, commit }, id) {
+    deleteModelAction({ state, commit, dispatch }, id) {
       return deleteModelApi(id).then(() => {
-        commit("deleteModel", id);
+        // commit("deleteModel", id);
+        dispatch("getAllModelListAction")
       });
     },
     updateModelAction({ state, commit }, { id, modelInfo }) {
       return updateModelApi({ modelId: id, modelInfo }).then(() => {
-        commit("updateModel", { id, modelInfo });
+        // commit("updateModel", { id, modelInfo });
+        dispatch("getAllModelListAction")
       });
     },
     async getModelBindingEdgeList({ state, commit }, { id }) {
       let res = await getModelBindingEdgeListApi(id);
-    //   console.log(res);
+      //   console.log(res);
       commit("setBindingEdgeList", res);
     },
     async bindingEdgeAction({ state, commit, dispatch }, { id, edgeId }) {
-    //   console.log(id, edgeId);
+      //   console.log(id, edgeId);
       await BindingEdgeApi({ modelId: id, edgeId });
       dispatch("getModelBindingEdgeList", { id });
     },
