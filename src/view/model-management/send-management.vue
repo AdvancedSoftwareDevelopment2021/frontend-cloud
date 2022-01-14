@@ -1,6 +1,5 @@
 <template>
   <Card>
-    Send management page
     <Row type="flex" justify="end">
       <Button
         class="add-model"
@@ -83,37 +82,18 @@ export default {
                   type: "error",
                 },
                 buttonText: "删除",
-                popTipTitle: "确定要删除这个边缘端？",
+                popTipTitle: "确定要删除这个绑定？",
                 ok: () => this.handleDelete(row.id),
               },
             });
-            const connectButton = h(
-              "Button",
-              {
-                props: {
-                  size: "small",
-                  type: "primary",
-                },
-                style: {
-                  marginRight: "1%",
-                },
-                on: {
-                  click: () => {
-                    this.handleConnect(row.id);
-                  },
-                },
-              },
-              "连接"
-            );
             const buttons = [
-              connectButton,
               deleteButton,
             ];
             return h("div", buttons);
           },
         },
       ],
-      modelBindingList: null
+      modelBindingList: []
     };
   },
   computed: {
@@ -154,6 +134,8 @@ export default {
     this.$nextTick(() => {
       console.log(this.edgeList);
     });
+    this.modelBindingList = this.edgeList
+    this.loading = false;
   },
 };
 </script>
