@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     ...mapActions(["insertModelAction"]),
-    handleSubmit(data) {
+    async handleSubmit(data) {
       let formData = new FormData();
       formData.append("name", data.name);
       formData.append("modelFile", data.modelFile);
@@ -32,7 +32,7 @@ export default {
       formData.append("timeUnit", data.timeUnit);
       formData.append("description", data.description);
       this.$Spin.show();
-      this.insertModelAction(formData)
+      await this.insertModelAction(formData)
         .then(() => {
           this.$Message.success("模型添加成功");
           this.$refs.formRef.handleReset();

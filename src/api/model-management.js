@@ -46,3 +46,11 @@ export const BindingEdgeApi = ({ modelId, edgeId }) => {
     method: "post",
   });
 };
+
+export const deleteBindingEdgeApi = ({ modelId, edgeId }) => {
+  console.log(`${url}/${modelId}/edge/${edgeId}`);
+  return axios.request({
+    url: `${url}/${modelId}/edge/${edgeId}`,
+    method: "delete",
+  });
+};

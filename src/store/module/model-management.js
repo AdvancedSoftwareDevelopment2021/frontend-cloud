@@ -3,12 +3,16 @@ import {
   insertModelApi,
   deleteModelApi,
   updateModelApi,
+  getModelBindingEdgeListApi,
+  BindingEdgeApi,
+  deleteBindingEdgeApi,
 } from "@/api/model-management";
 
 export default {
   state: {
     modelList: [],
     modelData: {},
+    modelBindingList: [],
   },
   mutations: {
     setModelList(state, res) {
@@ -30,19 +34,21 @@ export default {
     setModel(state, data) {
       state.modelData = data;
     },
+    setBindingEdgeList(state, data) {
+      state.modelBindingList = data;
+    },
   },
   actions: {
     async getAllModelListAction({ state, commit }) {
       let res = await getAllModelListApi();
       commit("setModelList", res);
-      console.log(res);
     },
     async insertModelAction({ state, commit }, data) {
-      console.log(data);
+      //   console.log(data);
       let ret = null;
       try {
-        let res = insertModelApi(data);
-        commit("addModel", res);
+        await insertModelApi(data);
+        // commit("addModel", res);
         ret = Promise.resolve();
       } catch (e) {
         ret = Promise.reject(e);
@@ -58,6 +64,20 @@ export default {
       return updateModelApi({ modelId: id, modelInfo }).then(() => {
         commit("updateModel", { id, modelInfo });
       });
+    },
+    async getModelBindingEdgeList({ state, commit }, { id }) {
+      let res = await getModelBindingEdgeListApi(id);
+      console.log(res);
+      commit("setBindingEdgeList", res);
+    },
+    async bindingEdgeAction({ state, commit, dispatch }, { id, edgeId }) {
+      console.log(id, edgeId);
+      await BindingEdgeApi({ modelId: id, edgeId });
+      dispatch("getModelBindingEdgeList", { id });
+    },
+    async deleteBindingEdgeAction({ state, commit, dispatch }, { id, edgeId }) {
+      await deleteBindingEdgeApi({ modelId: id, edgeId });
+      dispatch("getModelBindingEdgeList", { id });
     },
   },
 };

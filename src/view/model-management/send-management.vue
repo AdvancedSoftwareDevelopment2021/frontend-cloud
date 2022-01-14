@@ -10,6 +10,35 @@
       >
         新增下发边缘
       </Button>
+      <Modal v-model="modal" title="绑定设备" footer-hide :closable="false">
+        <Form ref="bindingForm" :model="bindingForm" :label-width="80">
+          <FormItem label="设备名称">
+            <Row>
+              <Col span="20">
+                <Select v-model="selectEdge">
+                  <Option v-for="item in edgeList" :value="item" :key="item.id"
+                    >{{ item.name }}
+                  </Option>
+                </Select>
+              </Col>
+            </Row>
+          </FormItem>
+          <Row :gutter="8" type="flex" justify="end">
+            <Col>
+              <Button @click="cancelBtnClick">取消</Button>
+            </Col>
+            <Col>
+              <Button
+                type="primary"
+                :loading="loading"
+                @click="confirmBtnClick"
+              >
+                确认
+              </Button>
+            </Col>
+          </Row>
+        </Form>
+      </Modal>
     </Row>
     <Row>
       <paged-table
@@ -37,40 +66,13 @@ export default {
       loading: true,
       columns: [
         {
+          title: "id",
+          key: "id",
+        },
+        {
           title: "名称",
           key: "name",
         },
-        {
-          title: "描述",
-          key: "description",
-        },
-        {
-          title: "主机名或ip地址",
-          key: "ip",
-        },
-        {
-          title: "端口号",
-          key: "port",
-        },
-        {
-          title: "连接路径",
-          key: "api",
-        },
-        {
-          title: "时间间隔",
-          key: "time",
-          render: (h, { row }) =>
-            h("span", row.interval + timeUnitNames[row.timeUnit]),
-        },
-        {
-          title: "注册时间",
-          key: "registerTimestamp",
-        },
-        // {
-        //   title: "状态",
-        //   key: "status",
-        //   render: (h, { row }) => h("span", edgeStatusNames[row.status]),
-        // },
         {
           title: "操作",
           key: "operation",
@@ -83,50 +85,60 @@ export default {
                 },
                 buttonText: "删除",
                 popTipTitle: "确定要删除这个绑定？",
-                ok: () => this.handleDelete(row.id),
+                ok: () => this.handleDeleteBinding(row.id),
               },
             });
-            const buttons = [
-              deleteButton,
-            ];
+            const buttons = [deleteButton];
             return h("div", buttons);
           },
         },
       ],
-      modelBindingList: []
+      modal: false,
+      selectEdge: null,
     };
   },
   computed: {
     ...mapState({
       edgeList: (state) => state.edgeManagement.edgeList,
+      modelData: (state) => state.modelManagement.modelData,
+      modelBindingList: (state) => state.modelManagement.modelBindingList,
     }),
   },
   methods: {
     ...mapMutations(["setModel"]),
-    ...mapActions(["connectEdgeAction"]),
-    ...mapActions(["deleteModelAction"]),
-    handleDelete(id) {
-      this.deleteModelAction(id)
-        .then(() => this.$Message.success("删除成功"))
+    ...mapActions([
+      "connectEdgeAction",
+      "getModelBindingEdgeList",
+      "bindingEdgeAction",
+    ]),
+    ...mapActions(["deleteBindingEdgeAction"]),
+    handleAdd() {
+      this.modal = true;
+    },
+    handleDeleteBinding(id) {
+      this.deleteBindingEdgeAction({
+        id: this.modelData.id,
+        edgeId: id,
+      })
+        .then(() => this.$Message.success("删除绑定成功"))
         .catch((err) => this.$Message.error(err.message));
     },
     handleSend(data) {
       this.setModel(data);
-    //   this.$router.push({ path: "send_management" });
+      //   this.$router.push({ path: "send_management" });
     },
-    handleDelete(id) {
-      //   this.removeEdgeAction(id)
-      //     .then(() => this.$Message.success("删除成功"))
-      //     .catch((err) => this.$Message.error(err.message));
+    cancelBtnClick() {
+      this.modal = false;
     },
-    handleConnect(id) {
-      //   this.loading = true;
-      //   this.connectEdgeAction(id)
-      //     .then(() => {})
-      //     .catch((err) => this.$Message.error(err.message))
-      //     .finally(() => {
-      //       this.loading = false;
-      //     });
+    confirmBtnClick() {
+      this.modal = false;
+      //   console.log(this.selectEdge);
+      //   console.log(this.modelData);
+      this.bindingEdgeAction({
+        id: this.modelData.id,
+        edgeId: this.selectEdge.id,
+      });
+      //   console.log(this.bindingDevice);
     },
   },
   async mounted() {
@@ -134,7 +146,8 @@ export default {
     this.$nextTick(() => {
       console.log(this.edgeList);
     });
-    this.modelBindingList = this.edgeList
+    console.log(this.modelData);
+    this.getModelBindingEdgeList({ id: this.modelData.id });
     this.loading = false;
   },
 };
