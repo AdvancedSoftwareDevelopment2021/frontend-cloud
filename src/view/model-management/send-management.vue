@@ -12,15 +12,15 @@
         新增下发边缘
       </Button>
     </Row>
-    <!-- <Row>
+    <Row>
       <paged-table
         :loading="loading"
         :columns="columns"
-        :data-source="modelList"
-        :total="modelList.length"
+        :data-source="modelBindingList"
+        :total="modelBindingList.length"
         style="margin-bottom: 50px"
       />
-    </Row> -->
+    </Row>
   </Card>
 </template>
 
@@ -113,6 +113,7 @@ export default {
           },
         },
       ],
+      modelBindingList: null
     };
   },
   computed: {
@@ -123,7 +124,7 @@ export default {
   methods: {
     ...mapMutations(["setModel"]),
     ...mapActions(["connectEdgeAction"]),
-    ...mapActions(["getEdgeListAction", "deleteModelAction"]),
+    ...mapActions(["deleteModelAction"]),
     handleDelete(id) {
       this.deleteModelAction(id)
         .then(() => this.$Message.success("删除成功"))
@@ -150,11 +151,6 @@ export default {
   },
   async mounted() {
     this.loading = true;
-    this.getEdgeListAction()
-      .then(() => {
-        this.loading = false;
-      })
-      .catch((err) => this.$Message.error(err.message));
     this.$nextTick(() => {
       console.log(this.edgeList);
     });

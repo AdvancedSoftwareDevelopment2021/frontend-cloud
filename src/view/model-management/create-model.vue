@@ -24,7 +24,6 @@ export default {
   methods: {
     ...mapActions(["insertModelAction"]),
     handleSubmit(data) {
-      console.log(data)
       let formData = new FormData();
       formData.append("name", data.name);
       formData.append("modelFile", data.modelFile);
