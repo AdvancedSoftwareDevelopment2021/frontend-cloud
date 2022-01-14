@@ -45,15 +45,18 @@ export default {
           key: "name",
         },
         {
-          // TODO: 如何形容owner
-          title: "创建角色",
-          key: "owner",
+          title: "狀態",
+          key: "status",
+        },
+        {
+          title: "是否更新",
+          key: "isTrain",
         },
         {
           title: "时间间隔",
           key: "time",
-          render: (h, { row }) =>
-            h("span", row.interval + timeUnitNames[row.timeUnit]),
+          // render: (h, { row }) =>
+          //   h("span", row.interval + timeUnitNames[row.timeUnit]),
         },
         {
           title: "描述",
@@ -141,13 +144,13 @@ export default {
     },
     handleSend(data) {
       this.setModel(data);
-      this.$router.push({ path: "send_management" })
+      this.$router.push({ path: "send_management" });
     },
   },
   async mounted() {
     this.loading = true;
     await this.getAllModelListAction();
-    this.$nextTick(() => {});
+    // this.$nextTick(() => {});
     this.loading = false;
   },
 };

@@ -172,8 +172,8 @@ export default {
         if (this.processData === null) {
           const result = this.bpmnModeler.saveXML({ format: true }).then(
             function (res) {
-              var timestamp = new Date().toString()
-              var name = _this.processName + '_' + timestamp
+              // var timestamp = new Date().toString()
+              var name = _this.processName
               var xmlBlob = new Blob([res.xml], { type: 'application/bpmn20-xml;charset=UTF-8,' })
               var formData = new FormData()
               formData.append('name', name)

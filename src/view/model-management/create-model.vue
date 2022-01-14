@@ -24,6 +24,7 @@ export default {
   methods: {
     ...mapActions(["insertModelAction"]),
     async handleSubmit(data) {
+      console.log(data)
       let formData = new FormData();
       formData.append("name", data.name);
       formData.append("modelFile", data.modelFile);
@@ -31,6 +32,8 @@ export default {
       formData.append("owner", data.owner);
       formData.append("timeUnit", data.timeUnit);
       formData.append("description", data.description);
+      formData.append("train", data.train);
+      formData.append("scriptFile", data.scriptFile);
       this.$Spin.show();
       await this.insertModelAction(formData)
         .then(() => {
