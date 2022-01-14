@@ -1,4 +1,4 @@
-import { getProcessList, getProcess, removeProcess, addProcess, modifyProcess } from '@/api/process-management'
+import { getProcessList, getProcess, removeProcess, addProcess, modifyProcess, issueProcess } from '@/api/process-management'
 
 /**
  * 边缘端相关状态
