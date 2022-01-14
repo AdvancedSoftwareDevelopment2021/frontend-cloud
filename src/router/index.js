@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import routes from './routers'
 import store from '@/store'
 import iView from 'iview'
-import { getToken, canTurnTo, setTitle } from '@/libs/util'
+import { getToken, canTurnTo, setTitle, getUserIdFromToken } from '@/libs/util'
 import config from '@/config'
 const { homeName } = config
 
@@ -22,6 +22,9 @@ const turnTo = (to, access, next) => {
 router.beforeEach((to, from, next) => {
   iView.LoadingBar.start()
   const token = getToken()
+  if (token) {
+    store.state.user.userId = getUserIdFromToken(token)
+  }
   if (!token && to.name !== LOGIN_PAGE_NAME) {
     // 未登录且要跳转的页面不是登录页
     next({
