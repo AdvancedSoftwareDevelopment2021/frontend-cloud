@@ -39,8 +39,9 @@ export default {
     },
   },
   actions: {
-    async getAllModelListAction({ state, commit }) {
-      let res = await getAllModelListApi();
+    async getAllModelListAction({ state, commit, rootState }) {
+      let userId = rootState.user.userId
+      let res = await getAllModelListApi(userId);
       commit("setModelList", res);
     },
     async insertModelAction({ state, commit }, data) {

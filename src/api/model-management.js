@@ -3,9 +3,9 @@ import axios from "@/libs/api.request";
 
 const url = "/model";
 
-export const getAllModelListApi = () => {
+export const getAllModelListApi = (userId) => {
   return axios.request({
-    url: `${url}/list`,
+    url: `${url}/list/user/${userId}`,
     method: "get",
   });
 };
