@@ -39,13 +39,14 @@ export default {
         {
           title: "id",
           key: "id",
+          width: "200px"
         },
         {
           title: "名称",
           key: "name",
         },
         {
-          title: "狀態",
+          title: "状态",
           key: "status",
         },
         {
