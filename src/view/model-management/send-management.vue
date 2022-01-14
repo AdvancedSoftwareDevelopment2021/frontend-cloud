@@ -66,11 +66,11 @@ export default {
           title: "注册时间",
           key: "registerTimestamp",
         },
-        {
-          title: "状态",
-          key: "status",
-          render: (h, { row }) => h("span", edgeStatusNames[row.status]),
-        },
+        // {
+        //   title: "状态",
+        //   key: "status",
+        //   render: (h, { row }) => h("span", edgeStatusNames[row.status]),
+        // },
         {
           title: "操作",
           key: "operation",

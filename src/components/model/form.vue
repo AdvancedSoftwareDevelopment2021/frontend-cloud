@@ -80,7 +80,7 @@ export default {
           required("时间间隔不可为空"),
           { validator: intervalValidator, trigger: "blur" },
         ],
-        modelFile: [required("文件不能为空")]
+        // modelFile: [required("文件不能为空")]
       },
     };
   },

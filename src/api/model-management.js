@@ -32,3 +32,17 @@ export const updateModelApi = ({ modelId, modelInfo }) => {
     data: modelInfo,
   });
 };
+
+export const getModelBindingEdgeListApi = (modelId) => {
+  return axios.request({
+    url: `${url}/${modelId}/edge`,
+    method: "get",
+  });
+};
+
+export const BindingEdgeApi = ({ modelId, edgeId }) => {
+  return axios.request({
+    url: `${url}/bind/${modelId}/${edgeId}`,
+    method: "post",
+  });
+};
