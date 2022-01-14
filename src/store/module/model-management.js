@@ -2,6 +2,7 @@ import {
   getAllModelListApi,
   insertModelApi,
   deleteModelApi,
+  updateModelApi,
 } from "@/api/model-management";
 
 export default {
@@ -21,10 +22,10 @@ export default {
     },
     updateModel(state, { id, modelInfo }) {
       // TODO: update
-    //   let model = state.modelList.find(
-    //     (modelInfo) => modelInfo.id === modelInfo.id
-    //   );
-    //   model = modelInfo;
+      let modelIndex = state.modelList.findIndex(
+        (modelInfo) => modelInfo.id === id
+      );
+      state.modelList[modelIndex] = modelInfo;
     },
     setModel(state, data) {
       state.modelData = data;
@@ -34,10 +35,10 @@ export default {
     async getAllModelListAction({ state, commit }) {
       let res = await getAllModelListApi();
       commit("setModelList", res);
-      console.log(res)
+      console.log(res);
     },
     async insertModelAction({ state, commit }, data) {
-        console.log(data)
+      console.log(data);
       let ret = null;
       try {
         let res = insertModelApi(data);
@@ -54,7 +55,7 @@ export default {
       });
     },
     updateModelAction({ state, commit }, { id, modelInfo }) {
-      return deleteModelApi(id).then(() => {
+      return updateModelApi({ modelId: id, modelInfo }).then(() => {
         commit("updateModel", { id, modelInfo });
       });
     },

@@ -84,6 +84,7 @@ export default {
       return new Promise((resolve, reject) => {
         getEdgeList()
           .then((res) => {
+            console.log(`EdgeList: ${res}`)
             commit("setEdgeList", res);
             resolve();
           })
